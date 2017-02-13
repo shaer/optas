@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Accounts;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +28,6 @@ class User extends Authenticatable
     ];
     
     public function userGroup() {
-        return $this->belongsTo('App\Models\UserGroup');
+        return $this->belongsTo('UserGroup');
     }
 }

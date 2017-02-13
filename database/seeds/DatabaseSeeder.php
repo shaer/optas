@@ -35,5 +35,27 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
             'password' => bcrypt('password'),
         ]);
+        
+        DB::table('connection_types')->insert([
+            'type' => 'MySQL',
+        ]);
+        DB::table('connection_types')->insert([
+            'type' => 'Oracle',
+        ]);
+        DB::table('connection_types')->insert([
+            'type' => 'MSSQL',
+        ]);
+        DB::table('connection_types')->insert([
+            'type' => 'PostgreSQL',
+        ]);
+        
+        DB::table('connections')->insert([
+            'name' => 'local',
+            'connection_type_id' => '1',
+            'host' => '127.0.0.1',
+            'user' => 'shaer1',
+            'password' => '',
+        ]);
     }
 }
+
