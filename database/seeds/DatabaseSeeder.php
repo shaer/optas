@@ -37,16 +37,16 @@ class DatabaseSeeder extends Seeder
         ]);
         
         DB::table('connection_types')->insert([
-            'type' => 'MySQL',
+            'name' => 'MySQL',
         ]);
         DB::table('connection_types')->insert([
-            'type' => 'Oracle',
+            'name' => 'Oracle',
         ]);
         DB::table('connection_types')->insert([
-            'type' => 'MSSQL',
+            'name' => 'MSSQL',
         ]);
         DB::table('connection_types')->insert([
-            'type' => 'PostgreSQL',
+            'name' => 'PostgreSQL',
         ]);
         
         DB::table('connections')->insert([

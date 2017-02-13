@@ -14,6 +14,9 @@ class ConnectionController extends \App\Http\Controllers\Controller
     
     public function index()
     {
-        var_dump($this->connection->requireById(1));
+        $connections = $this->connection->getAll();
+        return view('connections.index', [
+            'connections' => $connections,
+        ]);
     }
 }

@@ -28,6 +28,6 @@ class User extends Authenticatable
     ];
     
     public function userGroup() {
-        return $this->belongsTo('UserGroup');
+        return $this->belongsTo('App\Accounts\UserGroup');
     }
 }
