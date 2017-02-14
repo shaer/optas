@@ -6,21 +6,34 @@
             <br /><br /><br />
                @section ('login_panel_title','Please Sign In')
                @section ('login_panel_body')
-                        <form role="form">
+                        <form role="form" method="POST" action="{{ route('login') }}">
+                            {{ csrf_field() }}
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input id="password" type="password" class="form-control" name="password" required>
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="{{ url ('') }}" class="btn btn-lg btn-success btn-block">Login</a>
+                                <button type="submit" class="btn btn-lg btn-success btn-block">
+                                    Login
+                                </button>
                             </fieldset>
                         </form>
                     
