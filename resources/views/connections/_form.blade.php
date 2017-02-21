@@ -1,54 +1,51 @@
     <div class="panel-body">
-        <!-- New Task Form -->
-        <form action="{{ url('connection') }}" method="POST" class="form-horizontal">
-            {{ csrf_field() }}
+        <!-- New Connection Form -->
+        {{ Form::model($model, ['url' => ['connections']]) }}
+            <div class="form-group {{($model->errors()->has('name') ? ' has-error' : '')}}">
+                {{ Form::label('name', 'Connection Name') }}
+                {{ Form::text('name', null, ['class' => 'form-control']) }}
+                @if ($model->errors()->has('name'))
+                    <small class="text-danger">{{ $model->errors()->first('name') }}</small>
+                @endif
+            </div>
             
-            <div class="form-group">
-                <label for="connection-name" class="col-sm-3 control-label">Connection Name</label>
-
-                <div class="col-sm-6">
-                    <input type="text" name="name" id="connection-name" class="form-control">
-                </div>
+            <div class="form-group {{($model->errors()->has('connection_type_id') ? ' has-error' : '')}}">
+                <label for="connection-type">Connection Type</label>
+                {{ Form::select('connection_type_id', $connection_types, null, ['class' => 'form-control', 'placeholder' => 'Select Type']) }}
+                @if ($model->errors()->has('connection_type_id'))
+                    <small class="text-danger">{{ $model->errors()->first('connection_type_id') }}</small>
+                @endif
+            </div>
+            
+            <div class="form-group {{($model->errors()->has('host') ? ' has-error' : '')}}">
+                {{ Form::label('host', 'Host') }}
+                {{ Form::text('host', null, ['class' => 'form-control']) }}
+                @if ($model->errors()->has('host'))
+                    <small class="text-danger">{{ $model->errors()->first('host') }}</small>
+                @endif
+            </div>
+            
+            <div class="form-group {{($model->errors()->has('user') ? ' has-error' : '')}}">
+                {{ Form::label('user', 'Username') }}
+                {{ Form::text('user', null, ['class' => 'form-control' ]) }}
+                @if ($model->errors()->has('user'))
+                    <small class="text-danger">{{ $model->errors()->first('user') }}</small>
+                @endif
+            </div>
+            
+            <div class="form-group {{($model->errors()->has('password') ? ' has-error' : '')}}">
+                {{ Form::label('password', 'Password') }}
+                {{ Form::password('password', ['class' => 'form-control']) }}
+                @if ($model->errors()->has('password'))
+                    <small class="text-danger">{{ $model->errors()->first('password') }}</small>
+                @endif
             </div>
             
             <div class="form-group">
-                <label for="connection-type" class="col-sm-3 control-label">Connection Type</label>
-
-                <div class="col-sm-6">
-                    <input type="text" name="connection_type_id" id="connection-type" class="form-control">
-                </div>
+                {{ Form::button('<i class="fa fa-plus"></i> Add Connection', 
+                        ['class' => 'btn btn-primary','type' => 'submit']) }}
+                {{ Form::button('<i class="glyphicon glyphicon-ok"></i> Test Connection', 
+                        ['class' => 'btn btn-success']) }}
             </div>
+        {{ Form::close() }}
             
-            <div class="form-group">
-                <label for="host" class="col-sm-3 control-label">Host</label>
-
-                <div class="col-sm-6">
-                    <input type="text" name="host" id="host" class="form-control">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="username" class="col-sm-3 control-label">Username</label>
-
-                <div class="col-sm-6">
-                    <input type="text" name="username" id="username" class="form-control">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="Password" class="col-sm-3 control-label">Password</label>
-
-                <div class="col-sm-6">
-                    <input type="password" name="Password" id="Password" class="form-control">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-default">
-                        <i class="fa fa-plus"></i> Add Connection
-                    </button>
-                </div>
-            </div>
-            
-        </form>

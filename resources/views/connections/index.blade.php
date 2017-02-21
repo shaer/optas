@@ -1,6 +1,35 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.dashboard')
+@section('page_heading','Manage Connections')
+@section('section')
 
+
+@if(Session::has('success'))
+<div class="alert alert-success  alert-dismissable " role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>  
+    <strong>Success:</strong>
+    Connection has been added successfully
+</div>
+@endif
+
+@if(Session::has('error'))
+<div class="alert alert-danger  alert-dismissable " role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>  
+    <strong>Errors:</strong>
+    <ul>
+        @foreach($model->errors()->all() as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addConnectionModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Connection
+    </button>
     @if (count($connections) > 0)
          <div class="panel panel-default">
             <div class="panel-heading">
@@ -37,8 +66,16 @@
                                     <div>{{ $connection->user }}</div>
                                 </td>
 
-                                <td>
-                                    <!-- TODO: Delete Button -->
+                                <td class="col-md-4">
+                                    <button type="button" class="btn btn-success"> 
+                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Test Connection
+                                    </button>
+                                    <button type="button" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -48,5 +85,18 @@
         </div>
     @endif;
 
+    <div class="modal fade" id="addConnectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add New Connection</h4>
+          </div>
+          <div class="modal-body">
+                @include('connections/_form')
+          </div>
+        </div>
+      </div>
+    </div>
 
 @endsection

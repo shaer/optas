@@ -69,7 +69,10 @@ class BaseRepository
     protected function storeEloquentModel($model)
     {
         if ($model->getDirty()) {
-            return $model->save();
+            if($model->validate($model->getAttributes())) {
+                return $model->save(); 
+            }
+            return false;
         } else {
             return $model->touch();
         }
@@ -78,6 +81,7 @@ class BaseRepository
     protected function storeArray($data)
     {
         $model = $this->getNew($data);
+        $this->model = $model;
         return $this->storeEloquentModel($model);
     }
 }

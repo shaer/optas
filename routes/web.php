@@ -17,4 +17,6 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 
 Route::get('/connections', 'Management\ConnectionController@index');
+Route::post('/connections', 'Management\ConnectionController@add');
+
 Route::get('/home', 'HomeController@index');
