@@ -3,6 +3,7 @@ namespace App\Core;
 
 use Illuminate\Database\Eloquent\Model;
 use Validator;
+use Illuminate\Support\MessageBag;
 
 class BaseModel extends Model {
     protected $rules = [
@@ -10,6 +11,11 @@ class BaseModel extends Model {
     
     private $errors;
     
+    public function __construct()
+    {
+        parent::__construct();
+        $this->errors = new MessageBag();
+    }
 
     public function validate($data)
     {
