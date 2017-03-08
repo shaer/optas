@@ -93,7 +93,28 @@
             <h4 class="modal-title" id="myModalLabel">Add New Connection</h4>
           </div>
           <div class="modal-body">
+                {{ Form::model($model, ['route' => ['addConnection']]) }}
                 @include('connections/_form')
+                {{ Form::close() }}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="editConnectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Edit Connection</h4>
+          </div>
+          <div class="modal-body">
+                {{ Form::model($model, [
+                    'method' => 'PATCH',
+                    'route' => ['updateConnection', 000]
+                ]) }}
+                @include('connections/_form')
+                {{ Form::close() }}
           </div>
         </div>
       </div>
