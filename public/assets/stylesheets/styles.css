@@ -8930,6 +8930,13 @@ canvas.round {
     background-color:#020111;
     color:#38f527;
 }
+.parsley-errors-list{
+    margin: 0px;
+    padding: 0px;
+    list-style: outside none none;
+    color: #A94442;
+}
+
 .timeline {
     position: relative;
     padding: 20px 0 20px;

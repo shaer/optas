@@ -93,7 +93,11 @@
             <h4 class="modal-title" id="myModalLabel">Add New Connection</h4>
           </div>
           <div class="modal-body">
-                {{ Form::model($model, ['route' => ['connections.store'], 'class' => 'ajaxForm']) }}
+                {{ Form::model($model, [
+                    'route' => ['connections.store'], 
+                    'class' => 'ajaxForm',
+                    'data-parsley-validate' => ''
+                ]) }}
                 @include('connections/_form')
                 {{ Form::close() }}
           </div>

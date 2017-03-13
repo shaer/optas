@@ -192,6 +192,9 @@ $(".ajaxForm").submit(function( event ) {
 	var post_url = $(this).attr("action");
 	var formData = $(this).serialize();
 	var formObj  = $(this);
+	if (!$(this).parsley().validate()) {
+		return false;
+	}
 	$.ajax({
 	    type: "POST",
 	    url: post_url,
@@ -199,7 +202,7 @@ $(".ajaxForm").submit(function( event ) {
 	    dataType: "json",
 	    success: function(data) {
 	    	if(data.is_success) {
-	    		location.reload();
+	    		window.location = window.location;
 	    	} else {
 				showFromErrors(data.data, formObj);
 	    	}
@@ -208,6 +211,14 @@ $(".ajaxForm").submit(function( event ) {
 	        alert('Destination Server unreachable!');
 	    }
 	});
+});
+
+//parsley events.
+window.Parsley.on('field:error', function() {
+  this.$element.closest("div").addClass("has-error")
+});
+window.Parsley.on('field:success', function() {
+  this.$element.closest("div").removeClass("has-error")
 });
 
 function resetPasswordField(form) {
@@ -249,3 +260,6 @@ function showFromErrors(errorObject, form){
 	    }
 	}
 }
+
+
+
