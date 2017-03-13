@@ -60,4 +60,9 @@ class ConnectionController extends \App\Http\Controllers\Controller
     public function show(Request $request, Connection $connection) {
         return response()->json($connection);
     }
+    
+    public function destroy(Request $request, Connection $connection){
+        $this->connection->delete($connection);
+        return redirect('/connections');
+    }
 }

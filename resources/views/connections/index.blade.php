@@ -73,9 +73,13 @@
                                     <button type="button" class="btn btn-primary editItem" data-items="name,connection_type_id,host,user" data-element="{{ $connection->id }}" data-path="/connections">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
-                                    <button type="button" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                                    </button>
+                                    <form action="{{ url('connections/'.$connection->id) }}" class="showInline" method="POST">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button id="delete-connection-{{ $connection->id }}" class="btn btn-danger deleteItem">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

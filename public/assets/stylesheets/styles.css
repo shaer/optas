@@ -8937,6 +8937,9 @@ canvas.round {
     color: #A94442;
 }
 
+.showInline{
+    display: inline;
+}
 .timeline {
     position: relative;
     padding: 20px 0 20px;

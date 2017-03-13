@@ -4,3 +4,7 @@
     list-style: outside none none;
     color: #A94442;
 }
+
+.showInline{
+    display: inline;
+}

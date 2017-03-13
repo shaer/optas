@@ -12026,5 +12026,9 @@ function showFromErrors(errorObject, form){
 	}
 }
 
-
-
+$(".deleteItem").click(function(event){
+	event.preventDefault();
+	if(confirm("Do you really want to delete this item?")) {
+		$(this).closest("form").submit();		
+	}
+});
