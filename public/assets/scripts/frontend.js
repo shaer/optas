@@ -11909,3 +11909,89 @@ $(function() {
 //                 ]
 //                 var cdonut1 = document.getElementById("cdonut1").getContext("2d");
 //                 new Chart(cdonut1).Doughnut(ddata1, { responsive: true});
+
+$(".editItem").click(function(){
+	var elementId   = $(this).attr("data-element");
+	var requestPath = $(this).attr("data-path") + "/" + elementId;
+	var formFields  = ($(this).attr("data-items")).split(",");
+	
+	$.get(requestPath, function(data){
+		var formElement = $("#editElementModel").find("form");
+		resetForm(formElement);
+		resetPasswordField(formElement);
+		var action      = formElement.attr("action");
+		action          = action.replace(/\/[0-9]+$/, "/"+elementId);
+		formElement.attr("action", action);
+		
+		for(index in formFields) {
+			fieldSelector = '[name="' + formFields[index] + '"]';
+			formElement.find(fieldSelector).val(data[formFields[index]]);
+		}
+		$("#editElementModel").modal();
+	})
+});
+
+
+$(".ajaxForm").submit(function( event ) {
+	event.preventDefault();
+	resetForm($(this));
+	var post_url = $(this).attr("action");
+	var formData = $(this).serialize();
+	var formObj  = $(this);
+	$.ajax({
+	    type: "POST",
+	    url: post_url,
+	    data: formData,
+	    dataType: "json",
+	    success: function(data) {
+	    	if(data.is_success) {
+	    		location.reload();
+	    	} else {
+				showFromErrors(data.data, formObj);
+	    	}
+	    },
+	    error: function() {
+	        alert('Destination Server unreachable!');
+	    }
+	});
+});
+
+function resetPasswordField(form) {
+	var passwordField = form.find('input[type="password"]');
+	
+	if(!passwordField.length){
+		return;
+	}
+	
+	var checkboxDiv   = form.find(".editPassword");
+	var checkbox      = form.find(".editPassCb");
+	
+	checkbox.removeAttr('checked');
+	passwordField.attr("disabled", "disabled");
+	checkboxDiv.removeClass("hidden");
+	
+	form.find(".editPassCb").change(function() {
+	    passwordField.attr('disabled',!this.checked)
+	});
+}
+
+function resetForm(form) {
+	form.find(".has-error").removeClass("has-error");
+	form.find(".text-danger").addClass("hidden");
+}
+
+function showFromErrors(errorObject, form){
+	var selector;
+	var element;
+	
+	for (var field in errorObject) {
+	    if (errorObject.hasOwnProperty(field)) {
+	    	selector = '[name="' + field + '"]';
+	    	parent  = form.find(selector).closest("div");
+	    	parent.addClass("has-error")
+	    	element = parent.find(".text-danger");
+	        element.text(errorObject[field][0]);
+	        element.removeClass("hidden");
+	    }
+	}
+}

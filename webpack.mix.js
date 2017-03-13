@@ -26,6 +26,7 @@ const { mix } = require('laravel-mix');
         'bower_components/bootstrap/dist/js/bootstrap.js',
         //'bower_components/Chart.js/Chart.js',
         'bower_components/metisMenu/dist/metisMenu.js',
+        'bower_components/parsleyjs/dist/parsleyjs.js',
         'resources/js/sb-admin-2.js',
         'resources/js/frontend.js'
     ], 'public/assets/scripts/frontend.js', './');

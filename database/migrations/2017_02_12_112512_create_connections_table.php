@@ -20,7 +20,7 @@ class CreateConnectionsTable extends Migration
             $table->foreign('connection_type_id')->references('id')->on('connection_types');
             $table->string('host');
             $table->string('user');
-            $table->string('password')->nullable();
+            $table->text('password')->nullable();
             $table->timestamps();
         });
     }

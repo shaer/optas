@@ -47,14 +47,23 @@ class BaseRepository
         return $model;
     }
     
+    public function update($id, $data)
+    {
+        $this->model = $this->requireById($id);
+        $this->model->fill($data);
+        return $this->storeEloquentModel($this->model);
+    }
+    
     public function getNew($attributes = [])
     {
-        return $this->model->newInstance($attributes);
+        $model = $this->model->newInstance($attributes);
+        $model->fill($attributes);
+        return $model;
     }
     
     public function save($data)
     {
-        if ($data instanceOf Model) {
+        if ($data instanceOf BaseModel) {
             return $this->storeEloquentModel($data);
         } elseif (is_array($data)) {
             return $this->storeArray($data);
@@ -68,11 +77,12 @@ class BaseRepository
     
     protected function storeEloquentModel($model)
     {
-        if ($model->getDirty()) {
-            if($model->validate($model->getAttributes())) {
-                return $model->save(); 
-            }
+        if(!$model->validate($model->getAttributes())) {
             return false;
+        }
+
+        if ($model->getDirty()) {
+            return $model->save(); 
         } else {
             return $model->touch();
         }

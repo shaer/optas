@@ -16,8 +16,11 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/connections', 'Management\ConnectionController@index');
-Route::post('/connections', 'Management\ConnectionController@add')->name("addConnection");
-Route::patch('/connections', 'Management\ConnectionController@update')->name("updateConnection");
+// Route::get('/connections', 'Management\ConnectionController@index');
+// Route::post('/connections', 'Management\ConnectionController@add')->name("addConnection");
+// Route::patch('/connections/{connection}', 'Management\ConnectionController@update')->name("updateConnection");
+// Route::get('/connection/{connection}', 'Management\ConnectionController@getConnection');
+
+Route::resource('connections','Management\ConnectionController');
 
 Route::get('/home', 'HomeController@index');

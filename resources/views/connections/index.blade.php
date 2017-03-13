@@ -9,7 +9,7 @@
         <span aria-hidden="true">×</span>
     </button>  
     <strong>Success:</strong>
-    Connection has been added successfully
+    Connection has been saved successfully
 </div>
 @endif
 
@@ -70,7 +70,7 @@
                                     <button type="button" class="btn btn-success"> 
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Test Connection
                                     </button>
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="button" class="btn btn-primary editItem" data-items="name,connection_type_id,host,user" data-element="{{ $connection->id }}" data-path="/connections">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
                                     <button type="button" class="btn btn-danger">
@@ -93,7 +93,7 @@
             <h4 class="modal-title" id="myModalLabel">Add New Connection</h4>
           </div>
           <div class="modal-body">
-                {{ Form::model($model, ['route' => ['addConnection']]) }}
+                {{ Form::model($model, ['route' => ['connections.store'], 'class' => 'ajaxForm']) }}
                 @include('connections/_form')
                 {{ Form::close() }}
           </div>
@@ -101,7 +101,7 @@
       </div>
     </div>
     
-    <div class="modal fade" id="editConnectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="editElementModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -111,7 +111,8 @@
           <div class="modal-body">
                 {{ Form::model($model, [
                     'method' => 'PATCH',
-                    'route' => ['updateConnection', 000]
+                    'route' => ['connections.update', 000],
+                    'class' => 'ajaxForm'
                 ]) }}
                 @include('connections/_form')
                 {{ Form::close() }}

@@ -18,4 +18,13 @@ class ConnectionRepository extends BaseRepository
         }
         return parent::save($data);
     }
+    
+    public function update($id, $data) {
+        if(empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $data['password'] = Crypt::encryptString($data['password']);
+        }
+         return parent::update($id, $data);
+    }
 }

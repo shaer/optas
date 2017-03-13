@@ -6,6 +6,7 @@ use App\Connections\ConnectionRepository;
 use App\Connections\ConnectionTypeRepository;
 use Illuminate\Http\Request;
 use Redirect;
+use App\Connections\Connection;
 
 class ConnectionController extends \App\Http\Controllers\Controller
 {
@@ -17,7 +18,7 @@ class ConnectionController extends \App\Http\Controllers\Controller
         $this->conn_type  = $conn_type;
     }
     
-    public function index()
+    public function index(Request $request)
     {
         $connections = $this->connection->getAll();
         $conn_types  = $this->conn_type->getConnectionTypes();
@@ -29,14 +30,34 @@ class ConnectionController extends \App\Http\Controllers\Controller
         ]);
     }
     
-    public function add(Request $request)
+    public function store(Request $request)
     {
+        $data    = false;
         if($this->connection->save($request->except('_token'))){
-            return Redirect::to('connections')->with('success', true);
+            $status = 200;
+            $request->session()->flash('success', true);
         } else {
-            $request->session()->flash('error', true);
-            return $this->index();
+            $status = 400;
+            $data   = $this->connection->getModel()->errors()->toArray();
         }
         
+        return $this->sendJsonOutput($status, $data);
+    }
+    
+    public function update(Request $request, $id) {
+        $data    = false;
+        if($this->connection->update($id, $request->except(['_method','_token']))) {
+            $status  = 200;
+            $request->session()->flash('success', true);
+        } else {
+            $status = 400;
+            $data   = $this->connection->getModel()->errors()->toArray();
+        }
+        
+        return $this->sendJsonOutput($status, $data);
+    }
+    
+    public function show(Request $request, Connection $connection) {
+        return response()->json($connection);
     }
 }
