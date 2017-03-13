@@ -22,5 +22,6 @@ Route::get('/', 'HomeController@index');
 // Route::get('/connection/{connection}', 'Management\ConnectionController@getConnection');
 
 Route::resource('connections','Management\ConnectionController');
+Route::resource('usergroups','Management\UserGroupController');
 
 Route::get('/home', 'HomeController@index');

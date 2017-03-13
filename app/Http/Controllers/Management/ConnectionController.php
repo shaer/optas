@@ -57,7 +57,7 @@ class ConnectionController extends \App\Http\Controllers\Controller
         return $this->sendJsonOutput($status, $data);
     }
     
-    public function show(Request $request, Connection $connection) {
+    public function show(Connection $connection) {
         return response()->json($connection);
     }
     

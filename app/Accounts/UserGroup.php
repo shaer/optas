@@ -2,10 +2,15 @@
 
 namespace App\Accounts;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Core\BaseModel;
 
-class UserGroup extends Model
+class UserGroup extends BaseModel
 {
+    protected $fillable = ['name', 'description'];
+    
+    protected $rules = [
+        'name' => 'required',
+    ];
     public function roles(){
         return $this->belongsToMany('Role');
     }
