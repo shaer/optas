@@ -122,17 +122,29 @@
                         <li {{ (Request::is('/') ? 'class="active"' : '') }}>
                             <a href="{{ url ('') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-                        <li >
+                        <li {{ (Request::is('configurations/*') ? 'class=active' : '') }}>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuration<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*users') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('users') }}">Users</a>
+                                <li {{ (Request::is('*configurations/users') ? 'class=active' : '') }}>
+                                    <a href="#">User Management <span class="fa arrow"></span></a>
+                                    <ul style="" class="nav nav-third-level collapse in">
+                                        <li {{ (Request::is('configurations/users') ? 'class=active' : '') }}>
+                                            <a href="{{ url ('configurations/users') }}">Users</a>
+                                        </li>
+                                        <li {{ (Request::is('configurations/users/usergroups*') ? 'class=active' : '') }}>
+                                            <a href="{{ url ('configurations/users/usergroups') }}">User Groups</a>
+                                        </li>
+                                        <li {{ (Request::is('configurations/users/usergroups/roles') ? 'class=active' : '') }}>
+                                            <a href="{{ url ('configurations/users/usergroups/roles') }}">User Group Roles</a>
+                                        </li>
+                                        <li {{ (Request::is('configurations/users/roles') ? 'class=active' : '') }}>
+                                            <a href="{{ url ('configurations/users/roles') }}">Roles Management</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li {{ (Request::is('*user-groups') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('user-groups') }}">User Groups</a>
-                                </li>
-                                <li {{ (Request::is('*connections') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('connections' ) }}">Database Connections</a>
+                                
+                                <li {{ (Request::is('*configurations/connections') ? 'class="active"' : '') }}>
+                                    <a href="{{ url ('configurations/connections' ) }}">Database Connections</a>
                                 </li>
                                 <li {{ (Request::is('*notifications') ? 'class="active"' : '') }}>
                                     <a href="{{ url('notifications') }}">Notifications Management</a>

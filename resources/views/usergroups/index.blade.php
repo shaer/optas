@@ -43,16 +43,18 @@
                                     <a href="usergroups/roles/{{ $group->id }}" class="btn btn-success"> 
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Manage Roles
                                     </a>
-                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $group->id }}" data-path="/usergroups">
+                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $group->id }}" data-path="/configurations/users/usergroups">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
-                                    <form action="{{ url('usergroups/'.$group->id) }}" class="showInline" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <button id="delete-group-{{ $group->id }}" class="btn btn-danger deleteItem">
+                                    {{ Form::model($model, [
+                                        'method' => 'DELETE',
+                                        'route' => ['usergroups.destroy', $group->id],
+                                        'class' => 'showInline'
+                                    ]) }}
+                                    <button id="delete-usergroup-{{ $group->id }}" class="btn btn-danger deleteItem">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
                                         </button>
-                                    </form>
+                                    {{ Form::close() }}
                                 </td>
                             </tr>
                         @endforeach

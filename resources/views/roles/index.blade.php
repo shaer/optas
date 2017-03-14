@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('page_heading','Manage Connections')
+@section('page_heading','Manage Roles')
 @section('section')
 
 
@@ -9,7 +9,7 @@
         <span aria-hidden="true">×</span>
     </button>  
     <strong>Success:</strong>
-    Connection has been saved successfully
+    Role has been saved successfully
 </div>
 @endif
 
@@ -28,12 +28,12 @@
 @endif
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Connection
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Role
     </button>
     @if (count($data) > 0)
          <div class="panel panel-default">
             <div class="panel-heading">
-                Available Connections
+                Available Roles
             </div>
 
             <div class="panel-body">
@@ -58,16 +58,18 @@
                                     <div>{{ $role->description }}</div>
                                 </td>
                                 <td class="col-md-4">
-                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $role->id }}" data-path="/roles">
+                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $role->id }}" data-path="/configurations/users/roles">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
-                                    <form action="{{ url('roles/'.$role->id) }}" class="showInline" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <button id="delete-connection-{{ $role->id }}" class="btn btn-danger deleteItem">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                                        </button>
-                                    </form>
+                                    {{ Form::model($model, [
+                                        'method' => 'DELETE',
+                                        'route' => ['roles.destroy', $role->id],
+                                        'class' => 'showInline'
+                                    ]) }}
+                                    <button id="delete-role-{{ $role->id }}" class="btn btn-danger deleteItem">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                                    </button>
+                                    {{ Form::close() }}
                                 </td>
                             </tr>
                         @endforeach

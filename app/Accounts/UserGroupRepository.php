@@ -21,7 +21,6 @@ class UserGroupRepository extends BaseRepository
     }
     
     public function saveGroupRoles($groups, $user_id) {
-        
         if(empty($groups)) {
             if($user_id == null) {
                 DB::table('role_user_group')->truncate();
@@ -31,9 +30,9 @@ class UserGroupRepository extends BaseRepository
             return true;
         }
         
+        DB::table('role_user_group')->truncate();
         foreach($groups as $group => $roles) {
             $model = $this->requireById($group);
-            $model->roles()->detach();
             $model->roles()->attach($roles);
         }
     }

@@ -70,16 +70,18 @@
                                     <button type="button" class="btn btn-success"> 
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Test Connection
                                     </button>
-                                    <button type="button" class="btn btn-primary editItem" data-items="name,connection_type_id,host,user" data-element="{{ $connection->id }}" data-path="/connections">
+                                    <button type="button" class="btn btn-primary editItem" data-items="name,connection_type_id,host,user" data-element="{{ $connection->id }}" data-path="/configurations/connections">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
-                                    <form action="{{ url('connections/'.$connection->id) }}" class="showInline" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <button id="delete-connection-{{ $connection->id }}" class="btn btn-danger deleteItem">
+                                    {{ Form::model($model, [
+                                        'method' => 'DELETE',
+                                        'route' => ['connections.destroy', $connection->id],
+                                        'class' => 'showInline'
+                                    ]) }}
+                                    <button id="delete-connection-{{ $connection->id }}" class="btn btn-danger deleteItem">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
                                         </button>
-                                    </form>
+                                    {{ Form::close() }}
                                 </td>
                             </tr>
                         @endforeach
