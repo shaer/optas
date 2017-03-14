@@ -8,61 +8,25 @@ use Illuminate\Http\Request;
 use Redirect;
 use App\Connections\Connection;
 
-class ConnectionController extends \App\Http\Controllers\Controller
+class ConnectionController extends \App\Core\CrudController
 {
-    private $connection;
     private $conn_type;
     
     public function __construct(ConnectionRepository $connection, ConnectionTypeRepository $conn_type){
-        $this->connection = $connection;
+        $this->repository = $connection;
         $this->conn_type  = $conn_type;
+        $this->route_name = "connections";
     }
     
-    public function index(Request $request)
+    public function index()
     {
-        $connections = $this->connection->getAll();
+        $connections = $this->repository->getAll();
         $conn_types  = $this->conn_type->getConnectionTypes();
         
         return view('connections.index', [
             'connections'      => $connections,
             'connection_types' => $conn_types,
-            'model'            => $this->connection->getModel(),
+            'model'            => $this->repository->getModel(),
         ]);
-    }
-    
-    public function store(Request $request)
-    {
-        $data    = false;
-        if($this->connection->save($request->except('_token'))){
-            $status = 200;
-            $request->session()->flash('success', true);
-        } else {
-            $status = 400;
-            $data   = $this->connection->getModel()->errors()->toArray();
-        }
-        
-        return $this->sendJsonOutput($status, $data);
-    }
-    
-    public function update(Request $request, $id) {
-        $data    = false;
-        if($this->connection->update($id, $request->except(['_method','_token']))) {
-            $status  = 200;
-            $request->session()->flash('success', true);
-        } else {
-            $status = 400;
-            $data   = $this->connection->getModel()->errors()->toArray();
-        }
-        
-        return $this->sendJsonOutput($status, $data);
-    }
-    
-    public function show(Connection $connection) {
-        return response()->json($connection);
-    }
-    
-    public function destroy(Request $request, Connection $connection){
-        $this->connection->delete($connection);
-        return redirect('/connections');
     }
 }

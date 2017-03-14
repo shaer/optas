@@ -15,7 +15,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewItemModel">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Group
     </button>
-    @if (count($groups) > 0)
+    @if (count($data) > 0)
          <div class="panel panel-default">
             <div class="panel-heading">
                 Available Groups
@@ -32,7 +32,7 @@
 
                     <!-- Table Body -->
                     <tbody>
-                        @foreach ($groups as $group)
+                        @foreach ($data as $group)
                             <tr>
                                 <!-- Task Name -->
                                 <td class="table-text">
