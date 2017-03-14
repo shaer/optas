@@ -27,10 +27,10 @@
 </div>
 @endif
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addConnectionModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Connection
     </button>
-    @if (count($connections) > 0)
+    @if (count($data) > 0)
          <div class="panel panel-default">
             <div class="panel-heading">
                 Available Connections
@@ -41,42 +41,30 @@
 
                     <!-- Table Headings -->
                     <thead>
-                        <th>Connection Name</th>
-                        <th>Type</th>
-                        <th>Host</th>
-                        <th>Username</th>
+                        <th>Role Name</th>
+                        <th>Role Describtion</th>
                         <th>&nbsp;</th>
                     </thead>
 
                     <!-- Table Body -->
                     <tbody>
-                        @foreach ($connections as $connection)
+                        @foreach ($data as $role)
                             <tr>
                                 <!-- Task Name -->
                                 <td class="table-text">
-                                    <div>{{ $connection->name }}</div>
+                                    <div>{{ $role->name }}</div>
                                 </td> 
                                 <td class="table-text">
-                                    <div>{{ $connection->connectionType->name }}</div>
+                                    <div>{{ $role->description }}</div>
                                 </td>
-                                <td class="table-text">
-                                    <div>{{ $connection->host }}</div>
-                                </td>
-                                <td class="table-text">
-                                    <div>{{ $connection->user }}</div>
-                                </td>
-
                                 <td class="col-md-4">
-                                    <button type="button" class="btn btn-success"> 
-                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Test Connection
-                                    </button>
-                                    <button type="button" class="btn btn-primary editItem" data-items="name,connection_type_id,host,user" data-element="{{ $connection->id }}" data-path="/connections">
+                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $role->id }}" data-path="/roles">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
-                                    <form action="{{ url('connections/'.$connection->id) }}" class="showInline" method="POST">
+                                    <form action="{{ url('roles/'.$role->id) }}" class="showInline" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <button id="delete-connection-{{ $connection->id }}" class="btn btn-danger deleteItem">
+                                        <button id="delete-connection-{{ $role->id }}" class="btn btn-danger deleteItem">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
                                         </button>
                                     </form>
@@ -89,20 +77,20 @@
         </div>
     @endif
 
-    <div class="modal fade" id="addConnectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Add New Connection</h4>
+            <h4 class="modal-title" id="myModalLabel">Add New Role</h4>
           </div>
           <div class="modal-body">
                 {{ Form::model($model, [
-                    'route' => ['connections.store'], 
+                    'route' => ['roles.store'], 
                     'class' => 'ajaxForm',
                     'data-parsley-validate' => ''
                 ]) }}
-                @include('connections/_form')
+                @include('roles/_form')
                 {{ Form::close() }}
           </div>
         </div>
@@ -114,15 +102,15 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Edit Connection</h4>
+            <h4 class="modal-title" id="myModalLabel">Edit Role</h4>
           </div>
           <div class="modal-body">
                 {{ Form::model($model, [
                     'method' => 'PATCH',
-                    'route' => ['connections.update', 000],
+                    'route' => ['roles.update', 000],
                     'class' => 'ajaxForm'
                 ]) }}
-                @include('connections/_form')
+                @include('roles/_form')
                 {{ Form::close() }}
           </div>
         </div>

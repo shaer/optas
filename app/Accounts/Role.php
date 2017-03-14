@@ -2,9 +2,13 @@
 
 namespace App\Accounts;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Core\BaseModel;
 
-class Role extends Model
+class Role extends BaseModel
 {
-
+    protected $fillable = ['name', 'description'];
+    
+    protected $rules = [
+        'name' => 'required',
+    ];
 }

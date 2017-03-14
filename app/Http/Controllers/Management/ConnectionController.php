@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Management;
 use App\Connections\ConnectionRepository;
 use App\Connections\ConnectionTypeRepository;
 use Illuminate\Http\Request;
-use Redirect;
 use App\Connections\Connection;
 
 class ConnectionController extends \App\Core\CrudController

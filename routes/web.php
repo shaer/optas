@@ -29,6 +29,9 @@ Route::resource('connections','Management\ConnectionController', ['except' => [
 Route::resource('usergroups','Management\UserGroupController', ['except' => [
     'create', 'edit'
 ]]);
+Route::resource('roles','Management\RoleController', ['except' => [
+    'create', 'edit'
+]]);
 #Route::get('/usergroups/roles', 'Management\UserGroupController@allRoles');
 
 Route::get('/home', 'HomeController@index');
