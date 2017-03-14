@@ -37,12 +37,12 @@
                                 <!-- Task Name -->
                                 <td class="table-text">
                                     <div>{{ $group->name }}</div>
-                                </td> 
+                                </td>
 
                                 <td class="col-md-4">
-                                    <button type="button" class="btn btn-success"> 
+                                    <a href="usergroups/roles/{{ $group->id }}" class="btn btn-success"> 
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Manage Roles
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $group->id }}" data-path="/usergroups">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                                     </button>
@@ -60,7 +60,7 @@
                 </table>
             </div>
         </div>
-    @endif;
+    @endif
 
     
     <div class="modal fade" id="addNewItemModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

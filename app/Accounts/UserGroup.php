@@ -12,6 +12,10 @@ class UserGroup extends BaseModel
         'name' => 'required',
     ];
     public function roles(){
-        return $this->belongsToMany('Role');
+        return $this->belongsToMany('App\Accounts\Role');
+    }
+    
+    public function hasRole($id){
+        return !empty($this->roles->find($id));
     }
 }

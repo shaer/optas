@@ -21,7 +21,14 @@ Route::get('/', 'HomeController@index');
 // Route::patch('/connections/{connection}', 'Management\ConnectionController@update')->name("updateConnection");
 // Route::get('/connection/{connection}', 'Management\ConnectionController@getConnection');
 
-Route::resource('connections','Management\ConnectionController');
-Route::resource('usergroups','Management\UserGroupController');
+Route::get('/usergroups/roles/{id?}', 'Management\UserGroupController@roles');
+Route::post('/usergroups/roles/{id?}', 'Management\UserGroupController@editRoles');
+Route::resource('connections','Management\ConnectionController', ['except' => [
+    'create', 'edit'
+]]);
+Route::resource('usergroups','Management\UserGroupController', ['except' => [
+    'create', 'edit'
+]]);
+#Route::get('/usergroups/roles', 'Management\UserGroupController@allRoles');
 
 Route::get('/home', 'HomeController@index');

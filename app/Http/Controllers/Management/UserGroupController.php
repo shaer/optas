@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Management;
 
 use App\Accounts\UserGroupRepository;
+use App\Accounts\RoleRepository;
 use App\Accounts\UserGroup;
 use Illuminate\Http\Request;
 use Redirect;
@@ -10,9 +11,11 @@ use Redirect;
 class UserGroupController extends \App\Http\Controllers\Controller
 {
     private $user_group;
+    private $role;
     
-    public function __construct(UserGroupRepository $user_group){
+    public function __construct(UserGroupRepository $user_group, RoleRepository $role) {
         $this->user_group  = $user_group;
+        $this->role        = $role;
     }
     
     public function index(){
@@ -57,6 +60,21 @@ class UserGroupController extends \App\Http\Controllers\Controller
     
     public function destroy(Request $request, UserGroup $usergroup){
         $this->user_group->delete($usergroup);
-        return redirect('/connections');
+        return redirect('/usergroups');
+    }
+    
+    public function roles(Request $request) {
+        $groups = $this->user_group->getGroups($request->id);
+        $roles  = $this->role->getAll();
+        
+        return view('usergroups.roles', [
+            'groups' => $groups,
+            'roles'  => $roles,
+        ]);
+    }
+    
+    public function editRoles(Request $request) {
+        $this->user_group->saveGroupRoles($request->input('roles'), $request->id);
+        return back()->with('success', true);
     }
 }
