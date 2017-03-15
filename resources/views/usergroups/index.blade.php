@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $group)
-                            <tr>
+                            <tr @if ($group->group_type == 0) class="danger" @endif>
                                 <td class="table-text">
                                     <div>{{ $group->name }}</div>
                                 </td>
@@ -43,6 +43,7 @@
                                     <div>{{ $group->description }}</div>
                                 </td>
                                 <td class="col-md-2">
+                                    @if ($group->group_type != 0)
                                     {!! Form::open(['route' => ['usergroups.destroy', $group->id], 'method' => 'delete', 'class' => 'showInline']) !!}
                                     <div class='btn-group'>
                                         <a href="usergroups/roles/{{ $group->id }}" type="button" class="btn btn-success btn-xs" data-toggle="tooltip" title="Manage Roles"> 
@@ -56,6 +57,11 @@
                                         </button>
                                     </div>
                                     {!! Form::close() !!}
+                                    @else
+                                    <a href="usergroups/roles/{{ $group->id }}" type="button" class="btn btn-success btn-xs" data-toggle="tooltip" title="Manage Roles"> 
+                                        <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

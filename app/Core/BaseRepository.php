@@ -25,7 +25,7 @@ class BaseRepository
     
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->all()->sortByDesc('id');
     }
     
     public function getAllPaginated($count)

@@ -12,7 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('user_groups')->insert([
-            'name' => 'Super Admin'
+            'name' => 'Super Admin',
+            'group_type' => 0
         ]);
         
         DB::table('user_groups')->insert([
@@ -20,7 +21,12 @@ class DatabaseSeeder extends Seeder
         ]);
         
         DB::table('roles')->insert([
-            'name' => 'Test Role'
+            'name' => 'Test Role',
+            'role_type' => 0
+        ]);
+        
+        DB::table('roles')->insert([
+            'name' => 'Test user defined role'
         ]);
         
         DB::table('role_user_group')->insert([

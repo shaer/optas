@@ -38,7 +38,7 @@
                     <!-- Table Body -->
                     <tbody>
                         @foreach ($data as $role)
-                            <tr>
+                            <tr @if ($role->role_type == 0) class="danger" @endif>
                                 <!-- Task Name -->
                                 <td class="table-text">
                                     <div>{{ $role->name }}</div>
@@ -47,6 +47,7 @@
                                     <div>{{ $role->description }}</div>
                                 </td>
                                 <td class="col-md-2">
+                                    @if ($role->role_type != 0)
                                     {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete', 'class' => 'showInline']) !!}
                                     <div class='btn-group'>
                                         <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,description" data-element="{{ $role->id }}" data-path="{{ route('roles.update', false) }}">
@@ -57,6 +58,7 @@
                                         </button>
                                     </div>
                                     {!! Form::close() !!}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

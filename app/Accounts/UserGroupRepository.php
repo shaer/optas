@@ -20,6 +20,24 @@ class UserGroupRepository extends BaseRepository
         return [$this->requireById($id)];
     }
     
+    public function delete($model) {
+        if($model->group_type == 0) {
+            return false;
+        }
+        
+        return parent::delete($model);
+    }
+    
+    public function update($id, $data) {
+        $model = $this->repository->requireById($id);
+        
+        if($model->group_type == 0) {
+            return false;
+        }
+        
+        return parent::update($id, $data); 
+    }
+    
     public function saveGroupRoles($groups, $user_id) {
         if(empty($groups)) {
             if($user_id == null) {
