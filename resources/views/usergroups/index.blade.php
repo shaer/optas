@@ -12,9 +12,14 @@
     User Group has been saved successfully
 </div>
 @endif
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewItemModel">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Group
-    </button>
+    <div class='btn-group extraMargin'>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewItemModel">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Group
+        </button>
+        <a href="{{route('showRoles', false)}}" class="btn btn-success">
+            <span class="glyphicon glyphicon-knight" aria-hidden="true"></span> Manage Roles
+        </a>
+    </div>
     @if (count($data) > 0)
          <div class="panel panel-default">
             <div class="panel-heading">
@@ -23,38 +28,34 @@
 
             <div class="panel-body">
                 <table class="table table-striped task-table">
-
-                    <!-- Table Headings -->
                     <thead>
                         <th>Group Name</th>
+                        <th>Description</th>
                         <th>&nbsp;</th>
                     </thead>
-
-                    <!-- Table Body -->
                     <tbody>
                         @foreach ($data as $group)
                             <tr>
-                                <!-- Task Name -->
                                 <td class="table-text">
                                     <div>{{ $group->name }}</div>
                                 </td>
-
-                                <td class="col-md-4">
-                                    <a href="usergroups/roles/{{ $group->id }}" class="btn btn-success"> 
-                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Manage Roles
-                                    </a>
-                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $group->id }}" data-path="/configurations/users/usergroups">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-                                    </button>
-                                    {{ Form::model($model, [
-                                        'method' => 'DELETE',
-                                        'route' => ['usergroups.destroy', $group->id],
-                                        'class' => 'showInline'
-                                    ]) }}
-                                    <button id="delete-usergroup-{{ $group->id }}" class="btn btn-danger deleteItem">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                                <td class="table-text">
+                                    <div>{{ $group->description }}</div>
+                                </td>
+                                <td class="col-md-2">
+                                    {!! Form::open(['route' => ['usergroups.destroy', $group->id], 'method' => 'delete', 'class' => 'showInline']) !!}
+                                    <div class='btn-group'>
+                                        <a href="usergroups/roles/{{ $group->id }}" type="button" class="btn btn-success btn-xs" data-toggle="tooltip" title="Manage Roles"> 
+                                            <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
+                                        </a>
+                                        <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,description" data-element="{{ $group->id }}" data-path="{{ route('usergroups.update', false) }}">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                         </button>
-                                    {{ Form::close() }}
+                                        <button id="delete-item-{{ $group->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach

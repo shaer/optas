@@ -42,7 +42,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Update Roles
                 </button>
                 {!! Form::close() !!}

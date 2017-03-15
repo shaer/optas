@@ -11,7 +11,7 @@
     </div>
     
     <div class="form-group">
-        {{ Form::button('<i class="fa fa-plus"></i> Save Group', 
+        {{ Form::button('<i class="glyphicon glyphicon-ok"></i> Save Group', 
                     ['class' => 'btn btn-primary','type' => 'submit']) }}
     </div>
 </div>

@@ -134,9 +134,6 @@
                                         <li {{ (Request::is('configurations/users/usergroups*') ? 'class=active' : '') }}>
                                             <a href="{{ url ('configurations/users/usergroups') }}">User Groups</a>
                                         </li>
-                                        <li {{ (Request::is('configurations/users/usergroups/roles') ? 'class=active' : '') }}>
-                                            <a href="{{ url ('configurations/users/usergroups/roles') }}">User Group Roles</a>
-                                        </li>
                                         <li {{ (Request::is('configurations/users/roles') ? 'class=active' : '') }}>
                                             <a href="{{ url ('configurations/users/roles') }}">Roles Management</a>
                                         </li>

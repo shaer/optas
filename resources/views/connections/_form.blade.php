@@ -29,9 +29,9 @@
             <small class="text-danger hidden"></small>
     </div>
     <div class="form-group">
-            {{ Form::button('<i class="fa fa-plus"></i> Save Connection', 
+            {{ Form::button('<i class="glyphicon glyphicon-ok"></i> Save Connection', 
                     ['class' => 'btn btn-primary','type' => 'submit']) }}
-            {{ Form::button('<i class="glyphicon glyphicon-ok"></i> Test Connection', 
+            {{ Form::button('<i class="glyphicon glyphicon-exclamation-sign"></i> Test Connection', 
                     ['class' => 'btn btn-success']) }}
     </div>
 </div> 

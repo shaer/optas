@@ -8,3 +8,7 @@
 .showInline{
     display: inline;
 }
+
+.extraMargin {
+    margin-bottom: 20px;
+}

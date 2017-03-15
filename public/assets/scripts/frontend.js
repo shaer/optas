@@ -11929,6 +11929,8 @@ $(function() {
 //                 var cdonut1 = document.getElementById("cdonut1").getContext("2d");
 //                 new Chart(cdonut1).Doughnut(ddata1, { responsive: true});
 
+$('[data-toggle="tooltip"]').tooltip();
+
 $(".editItem").click(function(){
 	var elementId   = $(this).attr("data-element");
 	var requestPath = $(this).attr("data-path") + "/" + elementId;

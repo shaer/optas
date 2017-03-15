@@ -12,24 +12,13 @@
     Role has been saved successfully
 </div>
 @endif
-
-@if(Session::has('error'))
-<div class="alert alert-danger  alert-dismissable " role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">×</span>
-    </button>  
-    <strong>Errors:</strong>
-    <ul>
-        @foreach($model->errors()->all() as $error)
-            <li>{{$error}}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Role
-    </button>
+    
+    <div class='btn-group extraMargin'>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Role
+        </button>
+    </div>
+    
     @if (count($data) > 0)
          <div class="panel panel-default">
             <div class="panel-heading">
@@ -57,19 +46,17 @@
                                 <td class="table-text">
                                     <div>{{ $role->description }}</div>
                                 </td>
-                                <td class="col-md-4">
-                                    <button type="button" class="btn btn-primary editItem" data-items="name,description" data-element="{{ $role->id }}" data-path="/configurations/users/roles">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-                                    </button>
-                                    {{ Form::model($model, [
-                                        'method' => 'DELETE',
-                                        'route' => ['roles.destroy', $role->id],
-                                        'class' => 'showInline'
-                                    ]) }}
-                                    <button id="delete-role-{{ $role->id }}" class="btn btn-danger deleteItem">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                                    </button>
-                                    {{ Form::close() }}
+                                <td class="col-md-2">
+                                    {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete', 'class' => 'showInline']) !!}
+                                    <div class='btn-group'>
+                                        <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,description" data-element="{{ $role->id }}" data-path="{{ route('roles.update', false) }}">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </button>
+                                        <button id="delete-item-{{ $role->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach
