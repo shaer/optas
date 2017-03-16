@@ -13,6 +13,6 @@ class ConnectionTypeRepository extends BaseRepository
     
     public function getConnectionTypes()
     {
-        return $this->model->pluck('name', 'id');
+        return $this->model->orderBy('name')->pluck('name', 'id');
     }
 }

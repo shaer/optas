@@ -34,6 +34,8 @@ Route::resource('configurations/users/usergroups','Management\UserGroupControlle
 Route::resource('configurations/users/roles','Management\RoleController', ['except' => [
     'create', 'edit'
 ]]);
-#Route::get('/usergroups/roles', 'Management\UserGroupController@allRoles');
+Route::resource('configurations/users','Management\UserController', ['except' => [
+    'create', 'edit'
+]]);
 
 Route::get('/home', 'HomeController@index');

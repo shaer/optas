@@ -54,4 +54,9 @@ class UserGroupRepository extends BaseRepository
             $model->roles()->attach($roles);
         }
     }
+    
+    public function getUserGroups()
+    {
+        return $this->model->orderBy('name')->pluck('name', 'id');
+    }
 }

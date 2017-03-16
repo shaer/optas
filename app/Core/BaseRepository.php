@@ -23,9 +23,13 @@ class BaseRepository
         $this->model = $model;
     }
     
-    public function getAll()
+    public function getAll($sortByColumn = 'id', $isDesc = true)
     {
-        return $this->model->all()->sortByDesc('id');
+        if($isDesc) {
+            return $this->model->all()->sortByDesc($sortByColumn);
+        }
+        
+        return $this->model->all()->sortBy($sortByColumn);
     }
     
     public function getAllPaginated($count)
