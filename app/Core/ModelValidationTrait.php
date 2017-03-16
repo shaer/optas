@@ -1,15 +1,18 @@
 <?php
 namespace App\Core;
 
-use Illuminate\Database\Eloquent\Model;
 use Validator;
 use Illuminate\Support\MessageBag;
 
-class BaseModel extends Model {
+trait ModelValidationTrait {
     protected $rules = [
         ];
     
     private $errors;
+    
+    protected function loadRules() {
+        //do nothing
+    }
     
     public function __construct()
     {
@@ -19,6 +22,7 @@ class BaseModel extends Model {
 
     public function validate($data)
     {
+        $this->loadRules();
         $v = Validator::make($data, $this->rules);
         if ($v->fails()) {
             $this->errors = $v->errors();

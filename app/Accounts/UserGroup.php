@@ -2,15 +2,22 @@
 
 namespace App\Accounts;
 
-use App\Core\BaseModel;
+use App\Core\ModelValidationTrait;
+use Illuminate\Database\Eloquent\Model;
 
-class UserGroup extends BaseModel
+class UserGroup extends Model
 {
+    
+    use ModelValidationTrait;
+    
     protected $fillable = ['name', 'description'];
     
-    protected $rules = [
-        'name' => 'required',
-    ];
+    protected function loadRules() {
+        $this->rules = array(
+            'name' => 'required',
+        );
+    }
+    
     public function roles(){
         return $this->belongsToMany('App\Accounts\Role');
     }
