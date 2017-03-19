@@ -38,4 +38,8 @@ Route::resource('configurations/users','Management\UserController', ['except' =>
     'create', 'edit'
 ]]);
 
+Route::resource('jobs','JobController', ['except' => [
+    'create', 'edit'
+]]);
+
 Route::get('/home', 'HomeController@index');

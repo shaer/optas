@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Exceptions\EntityNotFoundException;
+use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository
 {
@@ -67,7 +68,7 @@ class BaseRepository
     
     public function save($data)
     {
-        if ($data instanceOf BaseModel) {
+        if ($data instanceOf Model) {
             return $this->storeEloquentModel($data);
         } elseif (is_array($data)) {
             return $this->storeArray($data);
@@ -84,7 +85,7 @@ class BaseRepository
         if(!$model->validate($model->getAttributes())) {
             return false;
         }
-
+        
         if ($model->getDirty()) {
             return $model->save(); 
         } else {
