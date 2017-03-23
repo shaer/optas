@@ -11943,15 +11943,22 @@ $(".editItem").click(function(){
 		var action      = formElement.attr("action");
 		action          = action.replace(/\/[0-9]+$/, "/"+elementId);
 		formElement.attr("action", action);
-		
-		for(index in formFields) {
-			fieldSelector = '[name="' + formFields[index] + '"]';
-			formElement.find(fieldSelector).val(data[formFields[index]]);
+		if(formFields == "job") {
+			display_job_fields(data, formElement);
+		} else {
+			for(index in formFields) {
+				fieldSelector = '[name="' + formFields[index] + '"]';
+				formElement.find(fieldSelector).val(data[formFields[index]]);
+			}	
 		}
+		
 		$("#editElementModel").modal();
 	})
 });
 
+function display_job_fields(data, form) {
+	console.log(data);
+}
 
 $(".ajaxForm").submit(function( event ) {
 	event.preventDefault();
@@ -12034,3 +12041,28 @@ $(".deleteItem").click(function(event){
 		$(this).closest("form").submit();		
 	}
 });
+
+$(".addNewAction").click(function(){
+	var selectedType = $(this).closest(".input-group").find("select").val();
+	var typesLookup  = ["", "db_action_cloneable"];
+	var element = $("." + typesLookup[selectedType]).clone();
+	
+	var elementCode = element.html();
+	var elementID   = makeId();
+	elementCode = elementCode.replace(/generatedId/g, elementID);
+	$('.accordion').find(".collapse").collapse('hide')
+	$(this).closest(".actions-tab").find(".accordion").append(elementCode);
+});
+
+
+
+function makeId()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 8; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}

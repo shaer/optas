@@ -14,8 +14,8 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('user_group_id')->unsigned();
-            $table->foreign('user_group_id')->references('id')->on('user_groups');
+            $table->integer('user_group_id')->unsigned()->nullable();
+            $table->foreign('user_group_id')->references('id')->on('user_groups')->onDelete('set null');
             $table->integer('status')->index;
         });
     }

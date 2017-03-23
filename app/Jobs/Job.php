@@ -20,6 +20,15 @@ class Job extends Model
             'created_by' => 'required|exists:users,id'
         );
     }
+    
+    public function actions(){
+        return $this->hasMany('App\Actions\Action');
+    }
+    
+    public function action_handlers()
+    {
+        return $this->hasManyThrough('App\Actions\Types\DbAction', 'App\Actions\Action');
+    }
 }
 
 

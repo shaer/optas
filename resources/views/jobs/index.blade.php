@@ -49,7 +49,7 @@
                                 <td class="col-md-2">
                                     {!! Form::open(['route' => ['jobs.destroy', $job->id], 'method' => 'delete', 'class' => 'showInline']) !!}
                                     <div class='btn-group'>
-                                        <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,description,namespace,is_automated" data-element="{{ $job->id }}" data-path="{{ route('jobs.update', false) }}">
+                                        <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="job" data-element="{{ $job->id }}" data-path="{{ route('jobs.update', false) }}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                         </button>
                                         <button id="delete-item-{{ $job->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
@@ -105,5 +105,7 @@
         </div>
       </div>
     </div>
+
+@include('jobs/_extraFields')
 
 @endsection

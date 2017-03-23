@@ -27,4 +27,8 @@ class ConnectionRepository extends BaseRepository
         }
          return parent::update($id, $data);
     }
+    
+    public function getConnections() {
+        return $this->model->orderBy('name')->pluck('name', 'id');
+    }
 }

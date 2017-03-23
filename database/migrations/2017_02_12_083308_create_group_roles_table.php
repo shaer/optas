@@ -16,8 +16,8 @@ class CreateGroupRolesTable extends Migration
         Schema::create('role_user_group', function (Blueprint $table) {
             $table->integer('user_group_id')->unsigned();
             $table->integer('role_id')->unsigned();
-            $table->foreign('user_group_id')->references('id')->on('user_groups');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('user_group_id')->references('id')->on('user_groups')->onDelete('cascade');;
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');;
             $table->timestamps();
         });
     }
