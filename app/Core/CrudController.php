@@ -21,7 +21,7 @@ class CrudController extends  \App\Http\Controllers\Controller
     public function store(Request $request)
     {
         $data    = false;
-        if($this->repository->save($request->except('_token'))){
+        if($this->repository->save($request->except('_token')) === true){
             $status = 200;
             $request->session()->flash('success', true);
         } else {
@@ -34,7 +34,7 @@ class CrudController extends  \App\Http\Controllers\Controller
     
     public function update(Request $request, $id) {
         $data    = false;
-        if($this->repository->update($id, $request->except(['_method','_token']))) {
+        if($this->repository->update($id, $request->except(['_method','_token'])) === true) {
             $status  = 200;
             $request->session()->flash('success', true);
         } else {

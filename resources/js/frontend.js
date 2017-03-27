@@ -173,31 +173,56 @@ $(".editItem").click(function(){
 	
 	$.get(requestPath, function(data){
 		var formElement = $("#editElementModel").find("form");
+		removeErrors(formElement);
 		resetForm(formElement);
-		resetPasswordField(formElement);
 		var action      = formElement.attr("action");
 		action          = action.replace(/\/[0-9]+$/, "/"+elementId);
 		formElement.attr("action", action);
 		if(formFields == "job") {
 			display_job_fields(data, formElement);
 		} else {
-			for(index in formFields) {
-				fieldSelector = '[name="' + formFields[index] + '"]';
-				formElement.find(fieldSelector).val(data[formFields[index]]);
-			}	
+			fillFields(formElement, formFields, data);
 		}
 		
 		$("#editElementModel").modal();
 	})
 });
 
+function fillFields(form, fields, data) {
+	for(index in fields) {
+		fieldSelector = '[name="' + fields[index] + '"]';
+		form.find(fieldSelector).val(data[fields[index]]);
+	}
+}
+
 function display_job_fields(data, form) {
-	console.log(data);
+	//basic data
+	var BasicData = ['name','description','namespace','is_automated'];
+	fillFields(form, BasicData, data);
+	
+	//manage actions
+	var triggers_lookup = [
+		[],
+		["query", "is_csv", "connection_id"]
+	]
+
+	for(var index in data.actions) {
+		var actionType = data.actions[index].action_type_id;
+		var uniqueId   = "action_" + data.actions[index].id;
+		addNewTriggerFields(actionType, uniqueId, form.find(".addNewAction"));
+		
+		for(var field in triggers_lookup[actionType]) {
+			var curField = triggers_lookup[actionType][field];
+			var selector = "[name='actions[" + uniqueId + "][triggerable][" + curField + "]']";
+			form.find(selector).val(data.actions[index].triggerable[curField]);
+		}
+	}
+	
 }
 
 $(".ajaxForm").submit(function( event ) {
 	event.preventDefault();
-	resetForm($(this));
+	removeErrors($(this));
 	var post_url = $(this).attr("action");
 	var formData = $(this).serialize();
 	var formObj  = $(this);
@@ -230,7 +255,9 @@ window.Parsley.on('field:success', function() {
   this.$element.closest("div").removeClass("has-error")
 });
 
-function resetPasswordField(form) {
+function resetForm(form) {
+	form.find(".triggerItemHolder").remove();
+	
 	var passwordField = form.find('input[type="password"]');
 	
 	if(!passwordField.length){
@@ -249,7 +276,7 @@ function resetPasswordField(form) {
 	});
 }
 
-function resetForm(form) {
+function removeErrors(form) {
 	form.find(".has-error").removeClass("has-error");
 	form.find(".text-danger").addClass("hidden");
 }
@@ -257,17 +284,37 @@ function resetForm(form) {
 function showFromErrors(errorObject, form){
 	var selector;
 	var element;
+	if(Array.isArray(errorObject)) {
+		return showJobErrors(errorObject, form);
+	}
 	
 	for (var field in errorObject) {
 	    if (errorObject.hasOwnProperty(field)) {
 	    	selector = '[name="' + field + '"]';
-	    	parent  = form.find(selector).closest("div");
-	    	parent.addClass("has-error")
-	    	element = parent.find(".text-danger");
-	        element.text(errorObject[field][0]);
-	        element.removeClass("hidden");
+	    	showFieldError(selector, form, errorObject[field][0]);
 	    }
 	}
+}
+
+function showJobErrors(errors, form) {
+	form.find('.nav-tabs a[href=".' + errors[0] + '-tab"]').tab('show');
+	
+	
+	for (var field in errors[2]) {
+	    if (errors[2].hasOwnProperty(field)) {
+	    	var selector = "[name='" + errors[0] + errors[1] + "[" + field + "]']" ;
+	    	console.log(selector);
+	    	showFieldError(selector, form, errors[2][field][0]);
+	    }
+	}
+}
+
+function showFieldError(selector, form, errorMessage) {
+	parent  = form.find(selector).closest("div");
+	parent.addClass("has-error")
+	var element = parent.find(".text-danger");
+    element.text(errorMessage);
+    element.removeClass("hidden");
 }
 
 $(".deleteItem").click(function(event){
@@ -279,16 +326,18 @@ $(".deleteItem").click(function(event){
 
 $(".addNewAction").click(function(){
 	var selectedType = $(this).closest(".input-group").find("select").val();
-	var typesLookup  = ["", "db_action_cloneable"];
-	var element = $("." + typesLookup[selectedType]).clone();
-	
-	var elementCode = element.html();
 	var elementID   = makeId();
-	elementCode = elementCode.replace(/generatedId/g, elementID);
-	$('.accordion').find(".collapse").collapse('hide')
-	$(this).closest(".actions-tab").find(".accordion").append(elementCode);
+	addNewTriggerFields(selectedType, elementID, $(this));
 });
 
+function addNewTriggerFields(selectedType, elementID, currentElement){
+	var typesLookup  = ["", "db_action_cloneable"];
+	var element = $("." + typesLookup[selectedType]).clone();
+	var elementCode = element.html();
+	elementCode = elementCode.replace(/generatedId/g, elementID);
+	$('.accordion').find(".collapse").collapse('hide')
+	currentElement.closest(".actions-tab").find(".accordion").append(elementCode);
+}
 
 
 function makeId()

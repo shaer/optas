@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Core\BaseRepository;
-use DB;
 
 class ActionRepository extends BaseRepository
 {

@@ -122,8 +122,8 @@
                         <li {{ (Request::is('/') ? 'class="active"' : '') }}>
                             <a href="{{ url ('') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-                        <li {{ (Request::is('reports/*') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('reports') }}"><i class="fa fa-file-text-o fa-fw"></i> Reports</a>
+                        <li {{ (Request::is('jobs/*') ? 'class="active"' : '') }}>
+                            <a href="{{ url ('jobs') }}"><i class="fa fa-file-text-o fa-fw"></i> Reports</a>
                         </li>
                         
                         <li {{ (Request::is('configurations/*') ? 'class=active' : '') }}>
