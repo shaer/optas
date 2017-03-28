@@ -11983,6 +11983,8 @@ function display_job_fields(data, form) {
 		}
 	}
 	
+	form.find(".panel-collapse").removeClass("in");
+	
 }
 
 $(".ajaxForm").submit(function( event ) {
@@ -12023,8 +12025,14 @@ window.Parsley.on('field:success', function() {
 function resetForm(form) {
 	form.find(".triggerItemHolder").remove();
 	
-	var passwordField = form.find('input[type="password"]');
+	var tabs = form.find('.tabbable');
+	if( tabs.length){
+		$(".tabbable").find('[href=".definition-tab"]').tab('show')
+	}
 	
+	
+	var passwordField = form.find('input[type="password"]');
+
 	if(!passwordField.length){
 		return;
 	}
@@ -12064,11 +12072,9 @@ function showFromErrors(errorObject, form){
 function showJobErrors(errors, form) {
 	form.find('.nav-tabs a[href=".' + errors[0] + '-tab"]').tab('show');
 	
-	
 	for (var field in errors[2]) {
 	    if (errors[2].hasOwnProperty(field)) {
 	    	var selector = "[name='" + errors[0] + errors[1] + "[" + field + "]']" ;
-	    	console.log(selector);
 	    	showFieldError(selector, form, errors[2][field][0]);
 	    }
 	}
@@ -12091,6 +12097,10 @@ $(".deleteItem").click(function(event){
 
 $(".addNewAction").click(function(){
 	var selectedType = $(this).closest(".input-group").find("select").val();
+	if(!selectedType) {
+		alert("Please select a valid type");
+		return;
+	}
 	var elementID   = makeId();
 	addNewTriggerFields(selectedType, elementID, $(this));
 });
@@ -12104,6 +12114,13 @@ function addNewTriggerFields(selectedType, elementID, currentElement){
 	currentElement.closest(".actions-tab").find(".accordion").append(elementCode);
 }
 
+$(".actions-tab").on("click", ".deleteAction", function(){
+	if(confirm("Do you really want to delete this action?")) {
+		$(this).closest(".triggerItemHolder").fadeOut(400, function() {
+			$(this).remove();
+		});
+	}	
+});
 
 function makeId()
 {

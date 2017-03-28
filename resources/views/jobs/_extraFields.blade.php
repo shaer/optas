@@ -3,6 +3,9 @@
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent=".accordion" href="#generatedId">Database Action</a>
+                <button type="button" class="close deleteAction">
+                    <span>&times;</span><span class="sr-only">Close</span>
+                </button>
             </h4>
         </div>
         <div id="generatedId" class="panel-collapse collapse in">
