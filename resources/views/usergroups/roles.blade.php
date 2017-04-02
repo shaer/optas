@@ -20,7 +20,7 @@
             </div>
 
             <div class="panel-body">
-                {!! Form::open(['route' => 'updateGroupRoles']) !!}
+                {!! Form::open(['route' => ['updateGroupRoles', $group_id]]) !!}
                 <table class="table table-striped task-table">
                     <thead>
                         <th>Role</th>

@@ -5,6 +5,7 @@ namespace App\Accounts;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Core\ModelValidationTrait;
+use Session;
 
 class User extends Authenticatable
 {
@@ -56,4 +57,8 @@ class User extends Authenticatable
         return "N/A";
     }
 
+    public function hasRole($role) {
+        $roles = $this->userGroup->roles()->pluck("machine_name")->toArray();
+        return in_array($role, $roles);
+    }
 }

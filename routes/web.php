@@ -16,30 +16,29 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-// Route::get('/connections', 'Management\ConnectionController@index');
-// Route::post('/connections', 'Management\ConnectionController@add')->name("addConnection");
-// Route::patch('/connections/{connection}', 'Management\ConnectionController@update')->name("updateConnection");
-// Route::get('/connection/{connection}', 'Management\ConnectionController@getConnection');
-
 Route::get('configurations/users/usergroups/roles/{id?}', 
-        'Management\UserGroupController@roles')->name('showRoles');;
+        'Management\UserGroupController@roles')->name('showRoles')
+        ->middleware(['auth', 'hasrole:view_assigned_roles_to_usergroups']);
 Route::post('configurations/users/usergroups/roles/{id?}', 
-        'Management\UserGroupController@editRoles')->name('updateGroupRoles');;
-Route::resource('configurations/connections','Management\ConnectionController', ['except' => [
-    'create', 'edit'
-]]);
-Route::resource('configurations/users/usergroups','Management\UserGroupController', ['except' => [
-    'create', 'edit'
-]]);
-Route::resource('configurations/users/roles','Management\RoleController', ['except' => [
-    'create', 'edit'
-]]);
-Route::resource('configurations/users','Management\UserController', ['except' => [
-    'create', 'edit'
-]]);
+        'Management\UserGroupController@editRoles')->name('updateGroupRoles')
+        ->middleware(['auth', 'hasrole:assign_roles_to_usergroups']);;
 
-Route::resource('jobs','JobController', ['except' => [
-    'create', 'edit'
-]]);
-
+Route::group(['middleware' => ['auth', 'hasrole']], function() {
+    Route::resource('configurations/connections','Management\ConnectionController', ['except' => [
+        'create', 'edit'
+    ]]);
+    Route::resource('configurations/users/usergroups','Management\UserGroupController', ['except' => [
+        'create', 'edit'
+    ]]);
+    Route::resource('configurations/users/roles','Management\RoleController', ['except' => [
+        'create', 'edit'
+    ]]);
+    Route::resource('configurations/users','Management\UserController', ['except' => [
+        'create', 'edit'
+    ]]);
+    
+    Route::resource('jobs','JobController', ['except' => [
+        'create', 'edit'
+    ]]);
+});
 Route::get('/home', 'HomeController@index');

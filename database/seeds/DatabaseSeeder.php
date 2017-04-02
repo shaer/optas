@@ -20,19 +20,26 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test Group'
         ]);
         
-        DB::table('roles')->insert([
-            'name' => 'Test Role',
-            'role_type' => 0
-        ]);
+        $roles = [
+                    "View Users","Add Users","Edit Users","Delete Users","View UserGroups",
+                    "Add UserGroups","Edit UserGroups","Delete UserGroups",
+                    "Assign Roles To UserGroups", "View Assigned Roles To UserGroups",
+                    "View Roles","Add Roles","Edit Roles","Delete Roles","View Connections",
+                    "Add Connections","Edit Connections","Delete Connections",
+                    "View Jobs","Add Jobs","Edit Jobs","Delete Jobs"
+                ];
         
-        DB::table('roles')->insert([
-            'name' => 'Test user defined role'
-        ]);
+        foreach($roles as $role) {
+             DB::table('roles')->insert([
+                    "name"         => $role,
+                    "machine_name" => Helper::tokenize($role),
+                    'role_type'    => 0
+                 ]);
+        }
         
-        DB::table('role_user_group')->insert([
-            'role_id' => 1,
-            'user_group_id' => 2
-        ]);
+        DB::insert('insert into role_user_group (user_group_id, role_id)
+                    SELECT 1, id FROM roles    
+        ');
         
         DB::table('users')->insert([
             'name' => 'Admin',

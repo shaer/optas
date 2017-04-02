@@ -22,8 +22,9 @@ class UserGroupController extends \App\Core\CrudController
         $roles  = $this->role->getAll();
         
         return view('usergroups.roles', [
-            'groups' => $groups,
-            'roles'  => $roles,
+            'groups'   => $groups,
+            'roles'    => $roles,
+            'group_id' => $request->id,
         ]);
     }
     

@@ -38,29 +38,32 @@ class UserGroupRepository extends BaseRepository
         return parent::update($id, $data); 
     }
     
-    public function saveGroupRoles($groups, $user_id) {
+    public function saveGroupRoles($groups, $group_id) {
         $cached_groups = array();
         
-        if(empty($groups)) {
-            if($user_id == null) {
-                DB::table('role_user_group')->truncate();
-            } else {
-                $this->requireById($user_id)->roles()->detach();
-            }
-            return true;
+        //we are going to update all the roles, so truncate
+        if($group_id == null) {
+            DB::table('role_user_group')->truncate();
+        } 
+        else if(empty($groups)) {
+            //group id exists, but no groups so delete all for this group
+            $this->requireById($group_id)->roles()->detach();
         }
         
-        DB::table('role_user_group')->truncate();
-        foreach($groups as $group => $roles) {
-            if(isset($cached_groups[$group])) {
-                $model == $cached_groups[$group];
-            } else {
-                $model = $this->requireById($group);
-                $cached_groups[$group] = $model;
+        if(is_array($groups)) {
+            foreach($groups as $group => $roles) {
+                if(isset($cached_groups[$group])) {
+                    $model == $cached_groups[$group];
+                } else {
+                    $model = $this->requireById($group);
+                    $cached_groups[$group] = $model;
+                    $this->requireById($group)->roles()->detach();
+                }
+                
+                $model->roles()->attach($roles);
             }
-            
-            $model->roles()->attach($roles);
         }
+        
     }
     
     public function getUserGroups()
