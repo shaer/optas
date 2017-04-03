@@ -25,7 +25,9 @@ class User extends Authenticatable
         2 => 'Pending Approval',
         3 => 'In Active'
     ];
-
+    
+    private $rolesCache;
+    
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -58,7 +60,28 @@ class User extends Authenticatable
     }
 
     public function hasRole($role) {
-        $roles = $this->userGroup->roles()->pluck("machine_name")->toArray();
+        $roles = $this->getRoles();
         return in_array($role, $roles);
+    }
+    
+    //has at least one role
+    public function hasOneRole($roles) {
+        $user_roles = $this->getRoles();
+        
+        foreach($roles as $role) {
+            if(in_array($role, $user_roles)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public function getRoles() {
+        if(!isset($this->rolesCache)) {
+            $this->rolesCache = $this->userGroup->roles()->pluck("machine_name")->toArray();
+        }
+        
+        return $this->rolesCache;
     }
 }

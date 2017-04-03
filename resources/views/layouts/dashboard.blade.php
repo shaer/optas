@@ -122,31 +122,42 @@
                         <li {{ (Request::is('/') ? 'class="active"' : '') }}>
                             <a href="{{ url ('') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+                        @if(Auth::user()->hasRole('view_jobs'))
                         <li {{ (Request::is('jobs/*') ? 'class="active"' : '') }}>
                             <a href="{{ url ('jobs') }}"><i class="fa fa-file-text-o fa-fw"></i> Reports</a>
                         </li>
-                        
+                        @endif
+                        @if(Auth::user()->hasOneRole(['view_users','view_usergroups','view_roles', 'view_connections']))
                         <li {{ (Request::is('configurations/*') ? 'class=active' : '') }}>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuration<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                @if(Auth::user()->hasOneRole(['view_users','view_usergroups','view_roles']))
                                 <li {{ (Request::is('*configurations/users') ? 'class=active' : '') }}>
                                     <a href="#">User Management <span class="fa arrow"></span></a>
                                     <ul style="" class="nav nav-third-level collapse in">
+                                        @if(Auth::user()->hasRole('view_users'))
                                         <li {{ (Request::is('configurations/users') ? 'class=active' : '') }}>
                                             <a href="{{ url ('configurations/users') }}">Users</a>
                                         </li>
+                                        @endif
+                                        @if(Auth::user()->hasRole('view_usergroups'))
                                         <li {{ (Request::is('configurations/users/usergroups*') ? 'class=active' : '') }}>
                                             <a href="{{ url ('configurations/users/usergroups') }}">User Groups</a>
                                         </li>
+                                        @endif
+                                        @if(Auth::user()->hasRole('view_roles'))
                                         <li {{ (Request::is('configurations/users/roles') ? 'class=active' : '') }}>
                                             <a href="{{ url ('configurations/users/roles') }}">Roles Management</a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
-                                
+                                @endif
+                                @if(Auth::user()->hasRole('view_connections'))
                                 <li {{ (Request::is('*configurations/connections') ? 'class="active"' : '') }}>
                                     <a href="{{ url ('configurations/connections' ) }}">Database Connections</a>
                                 </li>
+                                @endif
                                 <li {{ (Request::is('*notifications') ? 'class="active"' : '') }}>
                                     <a href="{{ url('notifications') }}">Notifications Management</a>
                                 </li>
@@ -157,8 +168,8 @@
                                     <a href="{{ url ('icons') }}"> Email Management</a>
                                 </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
+                         @endif
                         <li {{ (Request::is('*documentation') ? 'class="active"' : '') }}>
                             <a href="{{ url ('documentation') }}"><i class="fa fa-file-word-o fa-fw"></i> Documentation</a>
                         </li>

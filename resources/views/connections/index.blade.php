@@ -10,11 +10,13 @@
         <strong>Success:</strong> Connection has been saved successfully
     </div>
     @endif
+    @if(Auth::user()->hasRole('add_connections'))
     <div class='btn-group extraMargin'>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Connection
         </button>
     </div>
+    @endif
     
     @if (count($connections) > 0)
          <div class="panel panel-default">
@@ -51,21 +53,24 @@
                                 <td class="table-text">
                                     <div>{{ $connection->user }}</div>
                                 </td>
-
                                 <td class="col-md-2">
-                                    {!! Form::open(['route' => ['connections.destroy', $connection->id], 'method' => 'delete', 'class' => 'showInline']) !!}
                                     <div class='btn-group'>
                                         <button type="button" class="btn btn-success btn-xs" data-toggle="tooltip" title="Test DB Connection"> 
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         </button>
+                                        @if($can['edit'])
                                         <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,connection_type_id,host,user" data-element="{{ $connection->id }}" data-path="{{ route('connections.update', false) }}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                         </button>
+                                        @endif
+                                        @if($can['delete'])
+                                        {!! Form::open(['route' => ['connections.destroy', $connection->id], 'method' => 'delete', 'class' => 'btn-group']) !!}
                                         <button id="delete-connection-{{ $connection->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
+                                        {!! Form::close() !!}
+                                        @endif
                                     </div>
-                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach

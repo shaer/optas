@@ -9,7 +9,7 @@ class Role extends Model
 {
     use ModelValidationTrait;
     
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'machine_name'];
     
     protected function loadRules() {
         $this->rules = array(

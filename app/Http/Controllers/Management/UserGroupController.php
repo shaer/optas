@@ -6,6 +6,7 @@ use App\Accounts\UserGroupRepository;
 use App\Accounts\RoleRepository;
 use App\Accounts\UserGroup;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserGroupController extends \App\Core\CrudController
 {
@@ -15,6 +16,12 @@ class UserGroupController extends \App\Core\CrudController
         $this->repository  = $usergroup;
         $this->role        = $role;
         $this->route_name  = "usergroups";
+    }
+    
+    protected function getRequiredRoles() {
+        $roles = parent::getRequiredRoles();
+        $roles['view_roles'] = Auth::user()->hasRole("view_assigned_roles_to_usergroups");
+        return $roles;
     }
     
     public function roles(Request $request) {

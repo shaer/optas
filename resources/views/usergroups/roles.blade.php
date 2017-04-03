@@ -42,9 +42,11 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if(Auth::user()->hasRole('add_usergroups'))
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Update Roles
                 </button>
+                @endif
                 {!! Form::close() !!}
             </div>
         </div>

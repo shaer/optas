@@ -3,6 +3,7 @@
 namespace App\Accounts;
 
 use App\Core\BaseRepository;
+use App\Helpers\Helper;
 
 class RoleRepository extends BaseRepository
 {
@@ -19,6 +20,11 @@ class RoleRepository extends BaseRepository
         return parent::delete($model);
     }
     
+    public function save($data) {
+        $data['machine_name'] = Helper::tokenize($data['name']);
+        return parent::save($data);
+    }
+    
     public function update($id, $data) {
         $model = $this->repository->requireById($id);
         
@@ -26,6 +32,7 @@ class RoleRepository extends BaseRepository
             return false;
         }
         
+        $data['machine_name'] = Helper::tokenize($data['name']);
         return parent::update($id, $data); 
     }
 }

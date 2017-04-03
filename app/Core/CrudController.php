@@ -3,18 +3,28 @@
 namespace App\Core;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class CrudController extends  \App\Http\Controllers\Controller
 {
     protected $repository;
     protected $route_name;
+
+    protected function getRequiredRoles() {
+        $roles['edit']   = Auth::user()->hasRole("edit_" . $this->route_name);
+        $roles['delete'] = Auth::user()->hasRole("delete_" . $this->route_name);
+
+        return $roles;
+    }
     
     public function index(){
         $data = $this->repository->getAll();
-
+        $roles = $this->getRequiredRoles();
+        
         return view($this->route_name . '.index', [
-            'data' => $data,
-            'model'  => $this->repository->getModel(),
+            'data'  => $data,
+            'model' => $this->repository->getModel(),
+            'can'   => $roles,
         ]);
     }
     

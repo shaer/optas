@@ -13,11 +13,13 @@
 </div>
 @endif
     
+    @if(Auth::user()->hasRole('add_roles'))
     <div class='btn-group extraMargin'>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Role
         </button>
     </div>
+    @endif
     
     @if (count($data) > 0)
          <div class="panel panel-default">
@@ -48,16 +50,22 @@
                                 </td>
                                 <td class="col-md-2">
                                     @if ($role->role_type != 0)
-                                    {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete', 'class' => 'showInline']) !!}
-                                    <div class='btn-group'>
-                                        <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,description" data-element="{{ $role->id }}" data-path="{{ route('roles.update', false) }}">
-                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </button>
-                                        <button id="delete-item-{{ $role->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </button>
-                                    </div>
-                                    {!! Form::close() !!}
+                                        @if($can['edit'] || $can['delete'])
+                                        <div class='btn-group'>
+                                            @if($can['edit'])
+                                            <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,description" data-element="{{ $role->id }}" data-path="{{ route('roles.update', false) }}">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            </button>
+                                            @endif
+                                            @if($can['delete'])
+                                            {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete', 'class' => 'btn-group']) !!}
+                                            <button id="delete-item-{{ $role->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            </button>
+                                            {!! Form::close() !!}
+                                            @endif
+                                        </div>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>

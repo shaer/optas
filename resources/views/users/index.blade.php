@@ -13,11 +13,13 @@
 </div>
 @endif
     
+    @if(Auth::user()->hasRole('add_users'))
     <div class='btn-group extraMargin'>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New User
         </button>
     </div>
+    @endif
     
     @if (count($users) > 0)
          <div class="panel panel-default">
@@ -55,16 +57,22 @@
                                     <div>{{ $user->getStatus() }}</div>
                                 </td>
                                 <td class="col-md-2">
-                                    {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete', 'class' => 'showInline']) !!}
+                                    @if($can['edit'] || $can['delete'])
                                     <div class='btn-group'>
+                                        @if($can['edit'])
                                         <button type="button" class="btn btn-warning btn-xs editItem"  data-toggle="tooltip" title="Edit Record" data-items="name,email,user_group_id,status" data-element="{{ $user->id }}" data-path="{{ route('users.update', false) }}">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                         </button>
+                                        @endif
+                                        @if($can['delete'])
+                                        {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete', 'class' => 'btn-group']) !!}
                                         <button id="delete-item-{{ $user->id }}" data-toggle="tooltip" title="Delete Record" class="btn btn-danger btn-xs deleteItem">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
+                                        {!! Form::close() !!}
+                                        @endif
                                     </div>
-                                    {!! Form::close() !!}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
