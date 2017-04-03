@@ -30,13 +30,12 @@ class UserGroupController extends \App\Core\CrudController
         
         return view('usergroups.roles', [
             'groups'   => $groups,
-            'roles'    => $roles,
-            'group_id' => $request->id,
+            'roles'    => $roles
         ]);
     }
     
     public function editRoles(Request $request) {
-        $this->repository->saveGroupRoles($request->input('roles'), $request->id);
+        $this->repository->saveGroupRoles($request->except('_token'));
         return back()->with('success', true);
     }
 }

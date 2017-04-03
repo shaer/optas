@@ -20,12 +20,15 @@
             </div>
 
             <div class="panel-body">
-                {!! Form::open(['route' => ['updateGroupRoles', $group_id]]) !!}
+                {!! Form::open(['route' => ['updateGroupRoles']]) !!}
                 <table class="table table-striped task-table">
                     <thead>
                         <th>Role</th>
                         @foreach ($groups as $group)
-                        <th>{{ $group->name }}</th>
+                        <th>
+                            {{ $group->name }}
+                            {{ Form::hidden('groups[]', $group->id) }}
+                        </th>
                         @endforeach
                     </thead>
                     <tbody>

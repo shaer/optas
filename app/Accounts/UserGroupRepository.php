@@ -38,32 +38,21 @@ class UserGroupRepository extends BaseRepository
         return parent::update($id, $data); 
     }
     
-    public function saveGroupRoles($groups, $group_id) {
-        $cached_groups = array();
+    public function saveGroupRoles($data) {
+        foreach($data['groups'] as $group) {
+            $group_roles = isset($data['roles'][$group]) ? $data['roles'][$group] : array();
+            $this->handleGroupRoles($group, $group_roles);
+        }
+    }
+    
+    public function handleGroupRoles($group_id, $roles) {
+        $group = $this->requireById($group_id);
         
-        //we are going to update all the roles, so truncate
-        if($group_id == null) {
-            DB::table('role_user_group')->truncate();
-        } 
-        else if(empty($groups)) {
-            //group id exists, but no groups so delete all for this group
-            $this->requireById($group_id)->roles()->detach();
+        if(empty($roles)) {
+            return $group->roles()->detach();
         }
         
-        if(is_array($groups)) {
-            foreach($groups as $group => $roles) {
-                if(isset($cached_groups[$group])) {
-                    $model == $cached_groups[$group];
-                } else {
-                    $model = $this->requireById($group);
-                    $cached_groups[$group] = $model;
-                    $this->requireById($group)->roles()->detach();
-                }
-                
-                $model->roles()->attach($roles);
-            }
-        }
-        
+        return $group->roles()->sync($roles);
     }
     
     public function getUserGroups()
