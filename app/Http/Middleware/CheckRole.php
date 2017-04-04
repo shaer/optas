@@ -42,7 +42,7 @@ class CheckRole
         $action   = array_pop($segments);
         $user     = $request->user();
         
-        if(is_int($action)) {
+        if(is_numeric($action)) {
             $action = array_pop($segments);
         }
 
