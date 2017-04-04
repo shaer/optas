@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use App\Actions\Types\QueryRunner;
+use App\Jobs\Job;
 
 class HomeController extends Controller
 {
@@ -26,5 +28,12 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    
+    public function dbtest()
+    {
+        $runner = new QueryRunner();
+        $actions = Job::find(1)->actions[0]->triggerable;
+        $runner->run($actions);
     }
 }

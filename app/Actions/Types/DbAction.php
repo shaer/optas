@@ -19,6 +19,10 @@ class DbAction extends Model
         );
     }
     
+    public function connection() {
+        return $this->belongsTo('App\Connections\Connection');
+    }
+    
     public function actions()
     {
         return $this->morphMany('App\Actions\Action', 'triggerable');

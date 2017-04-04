@@ -179,6 +179,7 @@ return [
         
         
         Collective\Html\HtmlServiceProvider::class,
+        Collective\Remote\RemoteServiceProvider::class,
 
     ],
 
@@ -231,7 +232,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Helper' => App\Helpers\Helper::class,
-
+        'SSH' => Collective\Remote\RemoteFacade::class,
     ],
 
 ];

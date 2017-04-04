@@ -42,3 +42,4 @@ Route::group(['middleware' => ['auth', 'hasrole']], function() {
     ]]);
 });
 Route::get('/home', 'HomeController@index');
+Route::get('/dbtest', 'HomeController@dbtest');
