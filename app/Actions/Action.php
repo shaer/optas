@@ -41,6 +41,11 @@ class Action extends Model
                 break;
         }
     }
+    
+    public function updateStatus($status) {
+        $this->action_status = $status;
+        return $this->save();
+    }
 }
 
 

@@ -19,8 +19,12 @@ class CreateJobsTable extends Migration
             $table->text('description')->nullable();
             $table->string('namespace');
             $table->dateTime('next_run_date')->nullable();
-            $table->dateTime('last_run_date')->nullable();
-            $table->char('last_run_status',1)->default("P");
+
+            $table->char('job_status',1)->default("P");
+            $table->integer('action_status')->nullable();
+            $table->dateTime('started_at')->nullable();
+            $table->dateTime('ended_at')->nullable();
+
             $table->char('is_automated',1)->default("T");
             $table->string('created_by');
             $table->timestamps();

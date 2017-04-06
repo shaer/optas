@@ -48,9 +48,9 @@ return [
             'root' => storage_path('app'),
         ],
         
-        'tmp' => [
+        'output' => [
             'driver' => 'local',
-            'root' => storage_path('tmp'),
+            'root' => storage_path('output'),
         ],
 
         'public' => [

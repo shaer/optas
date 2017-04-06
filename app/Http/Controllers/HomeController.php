@@ -33,7 +33,8 @@ class HomeController extends Controller
     public function dbtest()
     {
         $runner = new QueryRunner();
-        $actions = Job::find(1)->actions[0]->triggerable;
-        $runner->run($actions);
+        $job    = Job::find(1);
+        $action = $job->actions[0];
+        $runner->run($action);
     }
 }

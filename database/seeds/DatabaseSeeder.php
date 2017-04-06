@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         DB::table('db_actions')->insert([
-            'query'         => "Select * from table;",
+            'query'         => "Select * from roles",
             'is_csv'        => 'T',
             'connection_id' => 1,
         ]);
