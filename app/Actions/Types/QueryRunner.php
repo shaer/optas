@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 use Storage;
 use App\Logs\ExecutionLog;
 
-class QueryRunner extends Runner
+class QueryRunner implements Runner
 {
     public function run($action) {
         $action->updateStatus("R");

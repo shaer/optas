@@ -82,7 +82,7 @@ class JobRepository extends BaseRepository
             $action_model = $action_model->fill($action);
             
             if($is_new_action) {
-                $triggrable = $action_model->getTriggerableType($action['action_type_id']);
+                $triggrable = $action_model->getTriggerableType();
             } else {
                 $triggrable = $action_model->triggerable;
             }

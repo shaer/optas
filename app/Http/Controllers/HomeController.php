@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
-use App\Actions\Types\QueryRunner;
+use App\Actions\ActionRunHandler;
 use App\Jobs\Job;
 
 class HomeController extends Controller
@@ -32,9 +32,7 @@ class HomeController extends Controller
     
     public function dbtest()
     {
-        $runner = new QueryRunner();
-        $job    = Job::find(1);
-        $action = $job->actions[0];
-        $runner->run($action);
+        $action = new ActionRunHandler();
+        $action->runActions(1);
     }
 }

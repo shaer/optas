@@ -29,8 +29,8 @@ class Action extends Model
         return $this->morphTo();
     }
     
-    public function getTriggerableType($type) {
-        switch($type) {
+    public function getTriggerableType() {
+        switch ($this->action_type_id) {
             case 1:
                 return new Types\DbAction();
                 break;

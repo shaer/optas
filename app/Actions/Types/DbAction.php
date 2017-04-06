@@ -27,6 +27,10 @@ class DbAction extends Model
     {
         return $this->morphMany('App\Actions\Action', 'triggerable');
     }
+    
+    public function getRunner() {
+        return new QueryRunner();
+    }
 }
 
 
