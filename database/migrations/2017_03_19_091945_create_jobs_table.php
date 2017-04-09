@@ -21,7 +21,6 @@ class CreateJobsTable extends Migration
             $table->dateTime('next_run_date')->nullable();
 
             $table->char('job_status',1)->default("P");
-            $table->integer('action_status')->nullable();
             $table->dateTime('started_at')->nullable();
             $table->dateTime('ended_at')->nullable();
 

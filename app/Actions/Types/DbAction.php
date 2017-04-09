@@ -5,7 +5,7 @@ namespace App\Actions\Types;
 use App\Core\ModelValidationTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class DbAction extends Model
+class DbAction extends Model implements ActionType
 {
     use ModelValidationTrait;
     

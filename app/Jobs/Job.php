@@ -29,6 +29,11 @@ class Job extends Model
     {
         return $this->hasManyThrough('App\Actions\Types\DbAction', 'App\Actions\Action');
     }
+    //R = Running, F= Failure, S=Success, P=Pending
+    public function updateStatus($status) {
+        $this->job_status = $status;
+        return $this->save();
+    }
 }
 
 
