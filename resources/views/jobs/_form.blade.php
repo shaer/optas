@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="scheduling-tab tab-pane fade in">
-                scheduling
+                @include('jobs/_scheduling_form')
             </div>
             <div class="triggers-tab tab-pane fade in">
                 triggers

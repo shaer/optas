@@ -12,3 +12,9 @@
 .extraMargin {
     margin-bottom: 20px;
 }
+
+.btnPadding > div.toggle {
+    margin:2px;
+}
+
+.datepicker{z-index:9999 !important}
