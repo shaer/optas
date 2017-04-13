@@ -6,14 +6,14 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <input type="checkbox"> Job should run everyday
+            <input type="checkbox" name="scheduler[everday][exists]" value="T"> Job should run everyday
         </div>
         
         <div class="form-group">
-            <input type="checkbox" class="toggleItem" data-toggle="weekly_schedule"> 
-            Job <select>
-                <option>should</option>
-                <option>should not</option>
+            <input type="checkbox" value="T" name="scheduler[weekly][exists]" class="toggleItem" data-toggle="weekly_schedule"> 
+            Job <select name="scheduler[weekly][should_run]">
+                <option value="T">should</option>
+                <option value="F">should not</option>
             </select> run on a specific weekday
         </div>
         <div class="weekly_schedule hidden">
@@ -22,25 +22,24 @@
                     <h3 class="panel-title">Select Week Days</h3>
                 </div>
                 <div class="panel-body">
-                    <select class="multiple-select" multiple="multiple">
-                        <option>Sunday</option>
-                        <option>Monday</option>
-                        <option>Tuesday</option>
-                        <option>Wednesday</option>
-                        <option>Thursday</option>
-                        <option>Friday</option>
-                        <option>Saturday</option>
+                    <select class="multiple-select" name="scheduler[weekly][list][]" multiple="multiple">
+                        <option value="7">Sunday</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
                     </select>
                 </div>
             </div>
         </div>
         
         <div class="form-group">
-            <input type="checkbox" class="toggleItem" data-toggle="smd_schedule">
-            Job 
-            <select>
-                <option>should</option>
-                <option>should not</option>
+            <input type="checkbox" value="T" name="scheduler[spmd][exists]" class="toggleItem" data-toggle="smd_schedule">
+            Job <select name="scheduler[spmd][should_run]">
+                <option value="T">should</option>
+                <option value="F">should not</option>
             </select>
             run on a specific days in any month
         </div>
@@ -59,11 +58,10 @@
         </div>
         
         <div class="form-group">
-            <input type="checkbox" class="toggleItem" data-toggle="monthly_schedule">
-                Job
-                <select>
-                    <option>should</option>
-                    <option>should not</option>
+            <input type="checkbox" value="T" class="toggleItem" name="scheduler[months][exists]" data-toggle="monthly_schedule">
+            Job <select name="scheduler[months][should_run]">
+                    <option value="T">should</option>
+                    <option value="F">should not</option>
                 </select>
                 run in a specific months
         </div>
@@ -73,30 +71,29 @@
                     <h3 class="panel-title">Select Specific Month Days</h3>
                 </div>
                 <div class="panel-body">
-                    <select class="multiple-select" multiple="multiple">
-                        <option>January</option>
-                        <option>February</option>
-                        <option>March</option>
-                        <option>April</option>
-                        <option>May</option>
-                        <option>June</option>
-                        <option>July</option>
-                        <option>August</option>
-                        <option>September</option>
-                        <option>October</option>
-                        <option>November</option>
-                        <option>December</option>
+                    <select class="multiple-select" name="scheduler[months][list][]" multiple="multiple">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                     </select>
                 </div>
             </div>
         </div>
         
         <div class="form-group">
-            <input type="checkbox" class="toggleItem" data-toggle="specific_schedule">
-            Job 
-            <select>
-                <option>should</option>
-                <option>should not</option>
+            <input type="checkbox" value="T" name="scheduler[days][exists]" class="toggleItem" data-toggle="specific_schedule">
+            Job <select name="scheduler[days][should_run]">
+                    <option value="T">should</option>
+                    <option value="F">should not</option>
             </select>
             run in a specific dates
         </div>
@@ -106,7 +103,7 @@
                     <h3 class="panel-title">Select Specific Month Days</h3>
                 </div>
                 <div class="panel-body">
-                    <input type='text' class='datetimepicker form-control' />
+                    <input type='text' name="scheduler[days][list]" class='datetimepicker form-control' />
                 </div>
             </div>
         </div>

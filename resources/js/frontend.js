@@ -223,6 +223,7 @@ function createToggleBtnObject() {
 	var btn = $("<input>", {
 		"type" : "checkbox",
 		"data-size" : "mini",
+		"name": "scheduler[spmd][list][]",
 		"data-onstyle": "success",
 		"data-toggle": "toggle"
 	});
@@ -239,7 +240,8 @@ function showMonthDaysButtons(element, start, end)
 	for(var day = start; day <= end; day++) {
 		btn.attr({
 			"data-on": day,
-			"data-off": day
+			"data-off": day,
+			"value": day
 		})
 		element.append(btn)
 	}
