@@ -7,6 +7,8 @@ use App\Actions\Action;
 use Illuminate\Support\Facades\Auth;
 use App\Core\Exceptions\EntityNotFoundException;
 use DB;
+use App\Schedulers\SchedulerHandler;
+use App\Schedulers\Schedule;
 
 class JobRepository extends BaseRepository
 {
@@ -19,13 +21,21 @@ class JobRepository extends BaseRepository
         DB::beginTransaction();
         $job_model = $this->getNew($data);
         $job_model->created_by = Auth::user()->id;
+        
         if(!parent::save($job_model)) return false;
         
-        $output = $this->_saveActions($data['actions'], $job_model, false);
-        if($output !== true) {
-            return $output;
+        if(isset($data['scheduler'])) {
+            $this->_processSchedulerData($data['scheduler'], $job_model->id);
         }
+        
+        if(isset($data['actions'])) {
+            $output = $this->_saveActions($data['actions'], $job_model, false);
             
+            if($output !== true) {
+                return $output;
+            }
+        }
+        
         DB::commit();
         return true;
     }
@@ -56,6 +66,20 @@ class JobRepository extends BaseRepository
 
         DB::commit();
         return true;
+    }
+    
+    private function _processSchedulerData($scheduler, $job_id){
+        $schedule = new Schedule();
+        foreach($scheduler as $key => $single) {
+            if(isset($single['exists']) && $single['exists'] == "T") {
+                $object = SchedulerHandler::getObject($key, $schedule);
+                $object->build($single);
+            }
+        }
+        
+        $schedule->setJobId($job_id);
+        $schedule->setRawSchedule(serialize($scheduler));
+        return $schedule->save();
     }
     
     private function _saveActions($actions, $job, $is_udpate = false) {
@@ -109,7 +133,9 @@ class JobRepository extends BaseRepository
     
     public function fetch($id = false) {
         if($id) {
-            return $this->model->with('actions.triggerable')->find($id);
+            $model = $this->model->with('actions.triggerable')->find($id);
+            $model->scheduler = unserialize($model->raw_schedule);
+            return $model;
         }
         
         return Job::with('actions.triggerable')->get();

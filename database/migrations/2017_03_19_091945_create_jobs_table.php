@@ -23,9 +23,14 @@ class CreateJobsTable extends Migration
             $table->char('job_status',1)->default("P");
             $table->dateTime('started_at')->nullable();
             $table->dateTime('ended_at')->nullable();
-
+            
+            $table->text('raw_schedule')->nullable();
+            $table->string('schedule')->nullable();
+            
             $table->char('is_automated',1)->default("T");
-            $table->string('created_by');
+            $table->integer('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
+
             $table->timestamps();
         });
     }
