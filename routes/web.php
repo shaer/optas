@@ -53,6 +53,12 @@ Route::group(['prefix' => 'app/jobs'], function () {
     Route::get('list_jobs.html', function () {
         return View::make('jobs.list');
     });
+    
+    Route::get('add_form.html', function () {
+        return View::make('jobs.add_form');
+    });
+    
+    
 });
 
 
