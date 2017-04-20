@@ -23,6 +23,10 @@ Route::post('configurations/users/usergroups/roles/{id?}',
         'Management\UserGroupController@editRoles')->name('updateGroupRoles')
         ->middleware(['auth', 'hasrole:assign_roles_to_usergroups']);;
 
+
+Route::get('/jobs/manage', 'JobController@manage');
+
+
 Route::group(['middleware' => ['auth', 'hasrole']], function() {
     Route::resource('configurations/connections','Management\ConnectionController', ['except' => [
         'create', 'edit'
@@ -41,5 +45,16 @@ Route::group(['middleware' => ['auth', 'hasrole']], function() {
         'create', 'edit'
     ]]);
 });
+
+
+
+
+Route::group(['prefix' => 'app/jobs'], function () {
+    Route::get('list_jobs.html', function () {
+        return View::make('jobs.list');
+    });
+});
+
+
 Route::get('/home', 'HomeController@index');
 Route::get('/dbtest', 'HomeController@dbtest');

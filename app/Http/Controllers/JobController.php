@@ -27,13 +27,17 @@ class JobController extends \App\Core\CrudController
         $roles['edit']   = Auth::user()->hasRole("edit_" . $this->route_name);
         $roles['delete'] = Auth::user()->hasRole("delete_" . $this->route_name);
 
-        return view($this->route_name . '.index', [
-            'data'         => $data,
+        return $this->sendJsonOutput(200, [
+            'jobs'         => $data,
             'action_types' => $action_types,
             'connections'  => $connections,
             'model'        => $this->repository->getModel(),
             'can'          => $roles,
         ]);
+    }
+    
+    public function manage() {
+        return view($this->route_name . '.index');
     }
     
     public function show($id) {

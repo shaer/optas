@@ -134,7 +134,9 @@ class JobRepository extends BaseRepository
     public function fetch($id = false) {
         if($id) {
             $model = $this->model->with('actions.triggerable')->find($id);
-            $model->scheduler = unserialize($model->raw_schedule);
+            if(isset($model->scheduler)) {
+                $model->scheduler = unserialize($model->raw_schedule);
+            }
             return $model;
         }
         

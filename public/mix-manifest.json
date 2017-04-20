@@ -1,5 +1,7 @@
 {
   "/mix.js": "/mix.js",
   "/assets/stylesheets/styles.css": "/assets/stylesheets/styles.css",
-  "/assets/scripts/frontend.js": "/assets/scripts/frontend.js"
+  "/assets/scripts/frontend.js": "/assets/scripts/frontend.js",
+  "/assets/stylesheets/angular.css": "/assets/stylesheets/angular.css",
+  "/assets/scripts/angular.js": "/assets/scripts/angular.js"
 }

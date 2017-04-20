@@ -39,3 +39,21 @@ const { mix } = require('laravel-mix');
         'resources/js/sb-admin-2.js',
         'resources/js/frontend.js'
     ], 'public/assets/scripts/frontend.js', './');
+    
+    
+    
+    mix.styles([
+        'bower_components/angular-material/angular-material.min.css',
+        'resources/css/angular.css'
+    ], 'public/assets/stylesheets/angular.css', './');
+    
+    mix.scripts([
+        'bower_components/angular/angular.min.js',
+        'bower_components/angular-route/angular-route.min.js',
+        'bower_components/angular-animate/angular-animate.min.js',
+        'bower_components/angular-aria/angular-aria.min.js',
+        'bower_components/angular-messages/angular-messages.min.js',
+        'bower_components/angular-material/angular-material.min.js',
+        'resources/js/angular-resources/app.js',
+        'resources/js/angular-resources/Controllers/*.js'
+    ] , 'public/assets/scripts/angular.js', './');

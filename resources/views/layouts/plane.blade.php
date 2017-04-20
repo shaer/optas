@@ -13,9 +13,11 @@
 	<meta content="" name="author"/>
 
 	<link rel="stylesheet" href="{{ asset("assets/stylesheets/styles.css") }}" />
+	@yield('extraCss')
 </head>
 <body>
 	@yield('body')
 	<script src="{{ asset("assets/scripts/frontend.js") }}" type="text/javascript"></script>
+	@yield('extraJs')
 </body>
 </html>

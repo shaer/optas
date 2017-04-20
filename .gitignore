@@ -8,3 +8,7 @@ Homestead.json
 Homestead.yaml
 .env
 /bower_components
+npm-debug.log
+/public/assets/fonts
+/public/assets/scripts
+/public/assets/stylesheets
