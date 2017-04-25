@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Action extends Model
 {
     
-    protected $fillable = ['action_type_id'];
+    protected $fillable = ['action_type_id', 'name'];
 
     use ModelValidationTrait;
 

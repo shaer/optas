@@ -55,5 +55,6 @@ const { mix } = require('laravel-mix');
         'bower_components/angular-messages/angular-messages.min.js',
         'bower_components/angular-material/angular-material.min.js',
         'resources/js/angular-resources/app.js',
+        'resources/js/angular-resources/Directives/*.js',
         'resources/js/angular-resources/Controllers/*.js'
     ] , 'public/assets/scripts/angular.js', './');

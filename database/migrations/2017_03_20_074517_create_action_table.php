@@ -15,6 +15,7 @@ class CreateActionTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('name')->nullable();
             $table->integer('action_type_id')->unsigned();
             $table->integer('job_id')->unsigned();
             $table->char('action_status',1)->default("P");

@@ -58,6 +58,10 @@ Route::group(['prefix' => 'app/jobs'], function () {
         return View::make('jobs.add_form');
     });
     
+    Route::get('database_action.html', function () {
+        return View::make('jobs.actions.database');
+    });
+    
     
 });
 

@@ -83,6 +83,7 @@ class DatabaseSeeder extends Seeder
         
         DB::table('actions')->insert([
             'action_type_id' => 1,
+            'name'         => 'Test Action',
             'job_id'        => 1,
             'triggerable_id'  => 1,
             'triggerable_type'  => 'DbAction'

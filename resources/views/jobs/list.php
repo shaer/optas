@@ -23,7 +23,7 @@
               <md-button class="md-icon-button" aria-label="Favorite">
                 <md-icon md-svg-icon="/assets/images/run.svg"></md-icon>
               </md-button>
-              <md-button class="md-icon-button" aria-label="Settings">
+              <md-button class="md-icon-button" aria-label="Settings" ng-click="manageJobDialog(null, job)">
                 <md-icon md-svg-icon="/assets/images/edit.svg"></md-icon>
               </md-button>
               <md-button class="md-icon-button md-warn" aria-label="Share">
@@ -37,7 +37,7 @@
 
 <md-fab-speed-dial class="md-fling md-fab-bottom-right md-hover-full fixed-position">
     <md-fab-trigger>
-        <md-button aria-label="Add Job" class="md-fab" ng-click="showTabDialog($event)">
+        <md-button aria-label="Add Job" class="md-fab" ng-click="manageJobDialog($event)">
             <md-icon style="color:#FFF" md-svg-icon="/assets/images/add.svg"></md-icon>
         </md-button>
     </md-fab-trigger>

@@ -1,35 +1,71 @@
-
-
-<md-dialog aria-label="Mango (Fruit)">
+<md-dialog class="autoResize" aria-label="Create New Job">
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Mango (Fruit)</h2>
+        <h2>Create New Job</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
         </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content style="max-width:800px;max-height:810px; ">
+    <md-dialog-content style="min-width:500px; max-width:800px;max-height:810px; ">
       <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab label="one">
+        <md-tab label="Definition">
+          <md-content class="md-padding" layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Name</label>
+                    <input md-maxlength="30" required name="name" ng-model="job.name" />
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Namespace</label>
+                    <input md-maxlength="30" required name="namespace" ng-model="job.namespace" />
+                </md-input-container>
+          </md-content>
           <md-content class="md-padding">
-            <h1 class="md-display-2">Tab One</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Job Description</label>
+                    <textarea name="description" ng-model="job.description"></textarea>
+                </md-input-container>
           </md-content>
         </md-tab>
-        <md-tab label="two">
-          <md-content class="md-padding">
-            <h1 class="md-display-2">Tab Two</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-            <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-          </md-content>
+        <md-tab label="Actions">
+          <md-content layout-gt-xs="row" class="md-padding">
+              <md-input-container class="md-block" flex-gt-xs>
+                <label>Select an Action to Add</label>
+                  <md-select ng-model="job_action" ng-change="showActionsPopup()">
+                    <md-option ng-value="1">Database Action</md-option>
+                </md-select>
+              </md-input-container>
+            </md-content>
+            <md-content class="md-padding">
+              <md-list ng-cloak ng-show="job.actions.length != 0">
+                <md-subheader class="md-no-sticky">Current Actions:</md-subheader>
+                <md-list-item ng-repeat="action in job.actions">
+                  <p> {{ action.name }} </p>
+                  <md-menu class="md-secondary">
+                    <md-button class="md-icon-button">
+                      <md-icon md-svg-icon="/assets/images/edit.svg"></md-icon>
+                    </md-button>
+                    <md-menu-content width="4">
+                      <md-menu-item>
+                        <md-button>
+                          Settings
+                        </md-button>
+                      </md-menu-item>
+                      <md-menu-item>
+                        <md-button>
+                          Delete
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </md-list-item>
+              </md-list>
+            </md-content>
         </md-tab>
-        <md-tab label="three">
+        <md-tab label="Scheduling">
           <md-content class="md-padding">
-            <h1 class="md-display-2">Tab Three</h1>
             <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
           </md-content>
         </md-tab>
@@ -37,15 +73,12 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
-      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-        More on Wikipedia
+      <md-button ng-click="answer('not useful')">
+        Cancel
       </md-button>
       <span flex></span>
-      <md-button ng-click="answer('not useful')" >
-        Not Useful
-      </md-button>
       <md-button ng-click="answer('useful')" style="margin-right:20px;" >
-        Useful
+        Save
       </md-button>
     </md-dialog-actions>
   </form>

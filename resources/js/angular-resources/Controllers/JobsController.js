@@ -1,27 +1,36 @@
-app.controller('JobsController', ['$scope','$http', '$mdDialog',
-    function($scope, $http, $mdDialog) {
+app.controller('JobsController', ['$scope','$http', '$mdDialog', '$templateCache',
+    function($scope, $http, $mdDialog, $templateCache) {
         
     $http.get("/jobs").then(function(response) {
         $scope.jobs = response.data.data.jobs;
     });
     
     
-    $scope.showTabDialog = function(ev) {
+    $scope.manageJobDialog = function(ev, job) {
+
+        $scope.editDialog = $mdDialog;
+        
+        if(job === undefined) {
+           job = {}; 
+        }
+        
         $mdDialog.show({
-            controller: DialogController,
+            controller: EditDialogController,
             templateUrl: '/app/jobs/add_form.html',
             parent: angular.element(document.body),
             targetEvent: ev,
-            clickOutsideToClose:true
+            clickOutsideToClose: false,
+            locals: {local: [$scope.manageJobDialog, job]},
         }).then(function(data) {
-            console.log(data);
             alert("Here!")
         });
     };
     
     
     
-     function DialogController($scope, $mdDialog) {
+    function EditDialogController($scope, $mdDialog, local) {
+        $scope.job = local[1];
+
         $scope.hide = function() {
             $mdDialog.hide();
         };
@@ -33,7 +42,44 @@ app.controller('JobsController', ['$scope','$http', '$mdDialog',
         $scope.answer = function(answer) {
             $mdDialog.hide(answer);
         };
-     }
+        
+        $scope.showActionsPopup = function() {
+            var showParentDialog = local[0];
+
+            var action_id = $scope.job_action;
+            $scope.job_action = undefined;
+            
+            
+            var templateMapping = [
+                    "",
+                    "/app/jobs/database_action.html"
+                ]
+            
+            $mdDialog.show({
+                controllerAs: 'addAction',
+                controller: function($mdDialog){
+                  this.save = function(action){
+                    $mdDialog.hide();
+                    this.appendAction(action);
+                    showParentDialog(null, $scope.job);
+                  }
+                  this.cancel = function(){
+                    $mdDialog.hide();
+                    showParentDialog(null, $scope.job);
+                  }
+                  
+                  this.appendAction = function(action) {
+                      if($scope.job.actions === undefined) {
+                          $scope.job.actions = [];
+                      }
+                      action.action_type = action_id;
+                      $scope.job.actions.push(action);
+                  }
+                },
+                templateUrl: templateMapping[action_id]
+              })
+        }
+    }
 
 }]);
 
