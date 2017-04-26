@@ -30,7 +30,7 @@ app.controller('JobsController', ['$scope','$http', '$mdDialog', '$templateCache
     
     function EditDialogController($scope, $mdDialog, local) {
         $scope.job = local[1];
-
+        
         $scope.hide = function() {
             $mdDialog.hide();
         };
@@ -43,12 +43,20 @@ app.controller('JobsController', ['$scope','$http', '$mdDialog', '$templateCache
             $mdDialog.hide(answer);
         };
         
-        $scope.showActionsPopup = function() {
+        $scope.showActionsPopup = function(action) {
             var showParentDialog = local[0];
+            var action_type_id;
+            var is_update;
 
-            var action_id = $scope.job_action;
-            $scope.job_action = undefined;
-            
+            if(action !== undefined) {
+                action_type_id = action.action_type_id;
+                is_update = true;
+            } else {
+                is_update = false;
+                action = {};
+                // action.triggerable = {};
+                action_type_id = $scope.job_action;
+            }
             
             var templateMapping = [
                     "",
@@ -58,9 +66,11 @@ app.controller('JobsController', ['$scope','$http', '$mdDialog', '$templateCache
             $mdDialog.show({
                 controllerAs: 'addAction',
                 controller: function($mdDialog){
-                  this.save = function(action){
+                  this.action = action;
+
+                  this.save = function(){
                     $mdDialog.hide();
-                    this.appendAction(action);
+                    this.appendAction();
                     showParentDialog(null, $scope.job);
                   }
                   this.cancel = function(){
@@ -68,15 +78,21 @@ app.controller('JobsController', ['$scope','$http', '$mdDialog', '$templateCache
                     showParentDialog(null, $scope.job);
                   }
                   
-                  this.appendAction = function(action) {
+                  this.appendAction = function() {
                       if($scope.job.actions === undefined) {
                           $scope.job.actions = [];
                       }
-                      action.action_type = action_id;
-                      $scope.job.actions.push(action);
+                      
+                      if(!is_update) {
+                          $scope.job.actions.push({
+                              triggerable: this.triggerable,
+                              name: this.action.name,
+                              action_type_id: action_type_id
+                          });
+                      }
                   }
                 },
-                templateUrl: templateMapping[action_id]
+                templateUrl: templateMapping[action_type_id]
               })
         }
     }
