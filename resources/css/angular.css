@@ -21,3 +21,20 @@
 .autoResize {
     height: auto !important;
 }
+
+.inline-flex{
+    display: inline-flex;
+}
+
+.scheduler md-input-container, .scheduler md-select{
+    margin:5px 0;
+}
+
+.spmdlist{
+    margin-bottom: 10px;
+}
+
+.spmdlist .md-button{
+    min-width:30px;
+    margin: 5px;
+}

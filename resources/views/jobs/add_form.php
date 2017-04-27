@@ -30,46 +30,10 @@
           </md-content>
         </md-tab>
         <md-tab label="Actions">
-          <div class="md-padding">
-            <md-content layout-gt-xs="row">
-                <md-input-container class="md-block" flex-gt-xs>
-                  <label>Select an Action to Add</label>
-                    <md-select ng-model="job_action" ng-change="showActionsPopup()">
-                      <md-option ng-value="1">Database Action</md-option>
-                  </md-select>
-                </md-input-container>
-              </md-content>
-              <md-content>
-                <md-list ng-cloak ng-show="job.actions.length != 0">
-                  <md-subheader class="md-no-sticky">Current Actions:</md-subheader>
-                  <md-list-item ng-repeat="action in job.actions">
-                    <p> {{ action.name }} </p>
-                    <md-menu class="md-secondary">
-                      <md-button class="md-icon-button">
-                        <md-icon md-svg-icon="/assets/images/edit.svg"></md-icon>
-                      </md-button>
-                      <md-menu-content width="4">
-                        <md-menu-item>
-                          <md-button ng-click="showActionsPopup(action)">
-                            Settings
-                          </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                          <md-button>
-                            Delete
-                          </md-button>
-                        </md-menu-item>
-                      </md-menu-content>
-                    </md-menu>
-                  </md-list-item>
-                </md-list>
-              </md-content>
-            </div>
+         <md-content ng-include="'/app/jobs/partials/actions.html'" class="md-padding"></md-content>
         </md-tab>
         <md-tab label="Scheduling">
-          <md-content class="md-padding">
-            <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-          </md-content>
+          <md-content ng-include="'/app/jobs/partials/scheduler.html'" class="md-padding"></md-content>
         </md-tab>
       </md-tabs>
     </md-dialog-content>

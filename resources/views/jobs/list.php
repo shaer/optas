@@ -1,9 +1,9 @@
 <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap >
     <md-card ng-repeat="(key, job) in jobs" class="jobCard">
         <md-card-header md-colors="{background: 'teal-50'}">
-            <md-card-avatar>
-                <img src="/assets/images/database.svg"/>
-            </md-card-avatar>
+            <!--<md-card-avatar>-->
+            <!--    <img src="/assets/images/database.svg"/>-->
+            <!--</md-card-avatar>-->
             <md-card-header-text>
                 <span class="md-title">Database Job</span>
                 <span class="md-subhead">{{job.name}}</span>
