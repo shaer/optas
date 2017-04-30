@@ -42,11 +42,11 @@
         
         <strong>Days of Month</strong>
         <div class="spmdlist">
-            <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(1, 31)" ng-click="addDay(n, job)">{{n}}</md-button>
+            <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(1, 31)" ng-click="addDay(n)">{{n}}</md-button>
         </div>
         <strong>Days from end of Month</strong>
         <div class="spmdlist">
-            <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(-10, -1)" ng-click="addDay(n, job)">{{n}}</md-button>
+            <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(-10, -1)" ng-click="addDay(n)">{{n}}</md-button>
         </div>
         
     </md-input-container>

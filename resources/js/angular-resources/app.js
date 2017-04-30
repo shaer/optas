@@ -1,4 +1,4 @@
-var app =  angular.module('OptasJobs',[
+var app = angular.module('OptasJobs', [
     'ngAnimate',
     'ngRoute',
     'ngMaterial'
@@ -7,13 +7,14 @@ var app =  angular.module('OptasJobs',[
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/', {
-                templateUrl: '/app/jobs/list_jobs.html',
-                controller: 'JobsController'
-            });
-}]);
+        when('/', {
+            templateUrl: '/app/jobs/list_jobs.html',
+            controller: 'JobsController'
+        });
+    }
+]);
 
 
-app.config(['$qProvider', function ($qProvider) {
+app.config(['$qProvider', function($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);

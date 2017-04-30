@@ -15,11 +15,11 @@
           <md-content class="md-padding" layout-gt-sm="row">
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Name</label>
-                    <input md-maxlength="30" required name="name" ng-model="job.name" />
+                    <input md-maxlength="150" required name="name" ng-model="job.name" />
                 </md-input-container>
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Namespace</label>
-                    <input md-maxlength="30" required name="namespace" ng-model="job.namespace" />
+                    <input md-maxlength="150" required name="namespace" ng-model="job.namespace" />
                 </md-input-container>
           </md-content>
           <md-content class="md-padding">

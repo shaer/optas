@@ -26,7 +26,7 @@
               <md-button class="md-icon-button" aria-label="Settings" ng-click="loadJobDetails(job.id)">
                 <md-icon md-svg-icon="/assets/images/edit.svg"></md-icon>
               </md-button>
-              <md-button class="md-icon-button md-warn" aria-label="Share">
+              <md-button class="md-icon-button md-warn" aria-label="Delete" ng-click="deleteJob(job.id)">
                 <md-icon md-svg-icon="/assets/images/delete.svg"></md-icon>
               </md-button>
             </md-card-actions>
