@@ -23,7 +23,7 @@
               <md-button class="md-icon-button" aria-label="Favorite">
                 <md-icon md-svg-icon="/assets/images/run.svg"></md-icon>
               </md-button>
-              <md-button class="md-icon-button" aria-label="Settings" ng-click="manageJobDialog(null, job)">
+              <md-button class="md-icon-button" aria-label="Settings" ng-click="loadJobDetails(job.id)">
                 <md-icon md-svg-icon="/assets/images/edit.svg"></md-icon>
               </md-button>
               <md-button class="md-icon-button md-warn" aria-label="Share">

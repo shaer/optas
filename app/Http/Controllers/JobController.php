@@ -23,7 +23,7 @@ class JobController extends \App\Core\CrudController
     public function index(){
         $data            = $this->repository->fetch();
         $action_types    = $this->actions->getActionTypes();
-        $connections      = $this->connections->getConnections();
+        $connections     = $this->connections->getConnections();
         $roles['edit']   = Auth::user()->hasRole("edit_" . $this->route_name);
         $roles['delete'] = Auth::user()->hasRole("delete_" . $this->route_name);
 
@@ -31,7 +31,6 @@ class JobController extends \App\Core\CrudController
             'jobs'         => $data,
             'action_types' => $action_types,
             'connections'  => $connections,
-            'model'        => $this->repository->getModel(),
             'can'          => $roles,
         ]);
     }

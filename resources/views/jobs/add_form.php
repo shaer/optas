@@ -39,11 +39,11 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
-      <md-button ng-click="answer('not useful')">
+      <md-button ng-click="answer(false)">
         Cancel
       </md-button>
       <span flex></span>
-      <md-button ng-click="answer('useful')" style="margin-right:20px;" >
+      <md-button ng-click="answer(true)" style="margin-right:20px;" >
         Save
       </md-button>
     </md-dialog-actions>

@@ -5,14 +5,19 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', '$templateCach
             $scope.jobs = response.data.data.jobs;
         });
 
+        $scope.loadJobDetails = function(id) {
+            $http.get("/jobs/" + id).then(function(response) {
+                $scope.manageJobDialog(null, response.data);
+            });
+        }
 
         $scope.manageJobDialog = function(ev, job) {
-
             $scope.editDialog = $mdDialog;
+            var is_new = false;
 
             if (job === undefined) {
-                job = {};
-                job.actions = [];
+                is_new = true;
+                job = $scope.createEmptyJobObject();
             }
 
             $mdDialog.show({
@@ -24,14 +29,81 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', '$templateCach
                 locals: {
                     local: [$scope.manageJobDialog, job]
                 },
-            }).then(function(data) {
-                console.log("Should save here!");
+            }).then(function(save) {
+                if (save) {
+                    if (is_new) {
+                        $scope.jobs.push(job);
+                    }
+                    else {
+                        $scope.jobs[job.id] = job;
+                    }
+                }
             });
         };
 
+        $scope.createEmptyJobObject = function() {
+            var job = {
+                "scheduler": {
+                    "everyday": {
+                        "exists": "F"
+                    },
+                    "weekly": {
+                        "exists": "F",
+                        "should_run": "T",
+                        "list": []
+                    },
+                    "spmd": {
+                        "exists": "F",
+                        "should_run": "T",
+                        "list": []
+                    },
+                    "months": {
+                        "exists": "F",
+                        "should_run": "T",
+                        "list": []
+                    },
+                    "days": {
+                        "exists": "F",
+                        "should_run": "T",
+                        "list": []
+                    }
+                },
+                "actions": []
+            };
+
+            return job;
+        }
+
         function EditDialogController($scope, $mdDialog, local) {
             $scope.job = local[1];
-            $scope.spmdSchedulers = [];
+            $scope.specificDaysFormat = buildLocaleProvider("DD-MMM");
+
+            //convert array of strings to array of numbers
+            $scope.job.scheduler.spmd.list = $scope.job.scheduler.spmd.list.map(Number);
+
+            function buildLocaleProvider(formatString) {
+                return {
+                    formatDate: function(date) {
+                        if (date) return moment(date).format(formatString);
+                        else return null;
+                    },
+                    parseDate: function(dateString) {
+                        if (dateString) {
+                            var m = moment(dateString, formatString, true);
+                            return m.isValid() ? m.toDate() : new Date(NaN);
+                        }
+                        else return null;
+                    }
+                };
+            }
+
+            $scope.addNewDate = function() {
+                $scope.job.scheduler.days.list.push("");
+            }
+
+            $scope.removeDate = function(index) {
+                $scope.job.scheduler.days.list.splice(index, 1);
+            }
 
             $scope.hide = function() {
                 $mdDialog.hide();
@@ -55,16 +127,13 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', '$templateCach
             };
 
             $scope.addDay = function(day, job) {
-                var elementIndex = $scope.spmdSchedulers.indexOf(day);
+                var elementIndex = $scope.job.scheduler.spmd.list.indexOf(day);
                 if (elementIndex == -1) {
-                    $scope.spmdSchedulers.push(day);
+                    $scope.job.scheduler.spmd.list.push(day);
                 }
                 else {
-                    $scope.spmdSchedulers.splice(elementIndex, 1);
+                    $scope.job.scheduler.spmd.list.splice(elementIndex, 1);
                 }
-
-
-                console.log($scope.spmdSchedulers);
             }
 
             $scope.showActionsPopup = function(action) {
@@ -120,6 +189,5 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', '$templateCach
                 })
             }
         }
-
     }
 ]);

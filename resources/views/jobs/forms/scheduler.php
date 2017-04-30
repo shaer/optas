@@ -10,8 +10,8 @@
         Job 
         <md-input-container>
             <md-select ng-model="job.scheduler.weekly.should_run" class="inline-flex">
-                <md-option ng-value="T">Should</md-option>
-                <md-option ng-value="F">Shouldn't</md-option>
+                <md-option ng-value="'T'">Should</md-option>
+                <md-option ng-value="'F'">Shouldn't</md-option>
             </md-select>
         </md-input-container> run on a specific weekday
     </md-input-container>
@@ -33,8 +33,8 @@
         Job 
         <md-input-container>
             <md-select ng-model="job.scheduler.spmd.should_run" class="inline-flex">
-                <md-option ng-value="T">Should</md-option>
-                <md-option ng-value="F">Shouldn't</md-option>
+                <md-option ng-value="'T'">Should</md-option>
+                <md-option ng-value="'F'">Shouldn't</md-option>
             </md-select>
         </md-input-container> run on a specific weekday
     </md-input-container>
@@ -42,11 +42,11 @@
         
         <strong>Days of Month</strong>
         <div class="spmdlist">
-            <md-button ng-class="{'md-raised': true, 'md-primary': spmdSchedulers.indexOf(n) != -1}" ng-repeat="n in range(1, 31)" ng-click="addDay(n, job)">{{n}}</md-button>
+            <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(1, 31)" ng-click="addDay(n, job)">{{n}}</md-button>
         </div>
         <strong>Days from end of Month</strong>
         <div class="spmdlist">
-            <md-button ng-class="{'md-raised': true, 'md-primary': spmdSchedulers.indexOf(n) != -1}" ng-repeat="n in range(-10, -1)" ng-click="addDay(n, job)">{{n}}</md-button>
+            <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(-10, -1)" ng-click="addDay(n, job)">{{n}}</md-button>
         </div>
         
     </md-input-container>
@@ -56,8 +56,8 @@
         Job 
         <md-input-container>
             <md-select ng-model="job.scheduler.months.should_run" class="inline-flex">
-                <md-option ng-value="T">Should</md-option>
-                <md-option ng-value="F">Shouldn't</md-option>
+                <md-option ng-value="'T'">Should</md-option>
+                <md-option ng-value="'F'">Shouldn't</md-option>
             </md-select>
         </md-input-container> run in specific months
     </md-input-container>
@@ -79,4 +79,34 @@
             <md-option value="12">December</md-option>
         </md-select>
     </md-input-container>
+    
+    <md-input-container  class="md-block">
+        <md-checkbox name="runeveryday" ng-true-value="'T'" ng-false-value="'F'" ng-model="job.scheduler.days.exists"></md-checkbox>
+        Job 
+        <md-input-container>
+            <md-select ng-model="job.scheduler.days.should_run" class="inline-flex">
+                <md-option ng-value="'T'">Should</md-option>
+                <md-option ng-value="'F'">Shouldn't</md-option>
+            </md-select>
+        </md-input-container> run in specific day
+    </md-input-container>
+    
+    
+    <div  ng-show="job.scheduler.days.exists == 'T'">
+        <div class="md-block" ng-repeat="date in job.scheduler.days.list track by $index">
+            <md-input-container flex="50">
+                <md-datepicker md-placeholder="Select Date" 
+                    ng-model="job.scheduler.days.list[$index]"
+                    md-current-view="month"
+                    md-date-locale="specificDaysFormat">
+                </md-datepicker>
+            </md-input-container>
+            <md-input-container flex="50">
+                <md-button class="md-icon-button" aria-label="Delete" ng-click="removeDate($index)">
+                    <md-icon md-svg-icon="/assets/images/delete.svg"></md-icon>
+                </md-button>
+            </md-input-container>
+            </div>
+        <md-button class="md-raised md-primary" ng-click="addNewDate()">Add New Date</md-button>
+    </div>
 </div>

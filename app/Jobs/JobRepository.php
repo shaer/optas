@@ -134,12 +134,12 @@ class JobRepository extends BaseRepository
     public function fetch($id = false) {
         if($id) {
             $model = $this->model->with('actions.triggerable')->find($id);
-            if(isset($model->scheduler)) {
+            if(isset($model->raw_schedule)) {
                 $model->scheduler = unserialize($model->raw_schedule);
             }
             return $model;
         }
         
-        return Job::with('actions.triggerable')->get();
+        return Job::with('actions.triggerable')->get()->keyBy("id");
     }
 }
