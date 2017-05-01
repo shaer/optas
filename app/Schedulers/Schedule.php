@@ -6,21 +6,24 @@ class Schedule
 {
     private $expression = "* * * * *";
     private $constrains;
-    private $job_id;
+    private $job;
     private $raw_schedule;
     
     
     public function save(){
-        $job_repository      = resolve('App\Jobs\JobRepository');
-        $model               = $job_repository->getById($this->getJobId());
+        $model               = $this->getJob();
         $model->raw_schedule = $this->getRawSchedule();
         $model->schedule     = $this->getExpression();
         $model->save();
         
         $constrains = [];
+        
+        if(empty($this->getAllConstrains()))
+            return;
+            
         foreach($this->getAllConstrains() as $key => $value) {
             $constrains[] = [
-                    "job_id" => $this->getJobId(),
+                    "job_id" => $this->getJob()->id,
                     "key"    => $key,
                     "value"  => $value
                 ];
@@ -29,12 +32,12 @@ class Schedule
         ScheduleConstrain::insert($constrains);
     }
     
-    public function getJobId() {
-        return $this->job_id;
+    public function getJob() {
+        return $this->job;
     }
     
-    public function setJobId($id) {
-        $this->job_id = $id;
+    public function setJob($job) {
+        $this->job = $job;
     }
     
     public function getRawSchedule() {

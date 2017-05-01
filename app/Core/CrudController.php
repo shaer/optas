@@ -61,6 +61,10 @@ class CrudController extends  \App\Http\Controllers\Controller
     
     public function destroy(Request $request, $id){
         $this->repository->delete($this->repository->requireById($id));
-        return back();
+        if($request->wantsJson()) {
+            return  $this->sendJsonOutput(200, "OK");
+        } else {
+            return back();
+        }
     }
 }

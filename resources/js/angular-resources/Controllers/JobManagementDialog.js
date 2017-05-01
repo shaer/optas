@@ -96,13 +96,9 @@ function EditDialogController($scope, $mdDialog, local) {
                 }
 
                 this.appendAction = function() {
-                    if ($scope.job.actions === undefined) {
-                        $scope.job.actions = [];
-                    }
-
                     if (!is_update) {
                         $scope.job.actions.push({
-                            triggerable: this.triggerable,
+                            triggerable: this.action.triggerable,
                             name: this.action.name,
                             action_type_id: action_type_id
                         });

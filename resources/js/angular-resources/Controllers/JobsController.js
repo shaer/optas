@@ -12,6 +12,8 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
         }
 
         $scope.manageJobDialog = function(ev, job) {
+
+            console.log(job);
             $scope.editDialog = $mdDialog;
             var is_new = false;
 
@@ -31,12 +33,15 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
                 },
             }).then(function(save) {
                 if (save) {
-                    JobService.save(job);
                     if (is_new) {
-                        $scope.jobs.push(job);
+                        JobService.store(job).then(function(response) {
+                            $scope.jobs[response.data.data.id] = response.data.data;
+                        });
                     }
                     else {
-                        $scope.jobs[job.id] = job;
+                        JobService.store(job).then(function(response) {
+                            $scope.jobs[job.id] = job;
+                        });
                     }
                 }
             });
@@ -44,7 +49,7 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
 
         $scope.deleteJob = function(id) {
             JobService.delete(id).then(function(response) {
-                $scope.jobs.splice(id, 1)
+                delete $scope.jobs[id];
             });
         }
     }

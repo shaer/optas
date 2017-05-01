@@ -8,11 +8,10 @@ app.factory('JobService', ['$http',
                 return $http.get("/jobs/" + id);
             },
             delete: function(id) {
-                alert("delete " + id);
+                return $http.delete("/jobs/" + id);
             },
-            save: function(object) {
-                console.log(object);
-                alert("save " + object.id);
+            store: function(object) {
+                return $http.post("/jobs/", object);
             },
             createNew: function() {
                 return {

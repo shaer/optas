@@ -9,7 +9,7 @@ class DateSchedule extends BaseScheduler
     
     protected function runBuilder($list, $should_run) {
         if($should_run) {
-            return $this->schedule->addConstrain("date_run", $list);
+            return $this->schedule->addConstrain("date_run", implode($list, ","));
         }
         
         $this->schedule->addConstrain("date_skip", $list);

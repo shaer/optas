@@ -19,17 +19,17 @@ class JobRepository extends BaseRepository
     
     public function save($data) {
         DB::beginTransaction();
-        $job_model = $this->getNew($data);
-        $job_model->created_by = Auth::user()->id;
+        $this->model = $this->getNew($data);
+        $this->model->created_by = Auth::user()->id;
         
-        if(!parent::save($job_model)) return false;
+        if(!parent::save($this->model)) return false;
         
-        if(isset($data['scheduler'])) {
-            $this->_processSchedulerData($data['scheduler'], $job_model->id);
+        if(isset($data['scheduler']) && !empty(isset($data['scheduler']))) {
+            $this->_processSchedulerData($data['scheduler']);
         }
         
-        if(isset($data['actions'])) {
-            $output = $this->_saveActions($data['actions'], $job_model, false);
+        if(isset($data['actions']) && !empty(isset($data['actions']))) {
+            $output = $this->_saveActions($data['actions'], $this->model, false);
             
             if($output !== true) {
                 return $output;
@@ -68,7 +68,7 @@ class JobRepository extends BaseRepository
         return true;
     }
     
-    private function _processSchedulerData($scheduler, $job_id){
+    private function _processSchedulerData($scheduler){
         $schedule = new Schedule();
         foreach($scheduler as $key => $single) {
             if(isset($single['exists']) && $single['exists'] == "T") {
@@ -76,13 +76,13 @@ class JobRepository extends BaseRepository
                 $object->build($single);
             }
         }
-        
-        $schedule->setJobId($job_id);
+
+        $schedule->setJob($this->model);
         $schedule->setRawSchedule(serialize($scheduler));
         return $schedule->save();
     }
     
-    private function _saveActions($actions, $job, $is_udpate = false) {
+    private function _saveActions($actions, $is_udpate = false) {
         $action_repository = resolve('App\Actions\ActionRepository');
         
         foreach($actions as $key => $action) {
@@ -92,7 +92,7 @@ class JobRepository extends BaseRepository
             if($is_udpate) {
                 $action_update = true;
                 $action_id = substr($key, 7);
-                $action_model = $job->actions()->find($action_id);
+                $action_model = $this->model->actions()->find($action_id);
                 if(!$action_model) {
                     $is_new_action = true;
                 }
@@ -120,7 +120,7 @@ class JobRepository extends BaseRepository
             //if these are a new objects, add the associations
             if($is_new_action) {
                 $action_model->triggerable()->associate($triggrable);
-                $action_model->job()->associate($job);
+                $action_model->job()->associate($this->model);
             }
         
             if(!$action_repository->save($action_model)) {
