@@ -1,3 +1,8 @@
+<div class="show_form_errors">
+    <ul>
+        <li ng-repeat="error in formErrors">{{error[0]}}</li>
+    </ul>
+</div>
 <md-content layout-gt-xs="row">
     <md-input-container class="md-block" flex-gt-xs>
         <label>Select an Action to Add</label>
@@ -9,7 +14,7 @@
 <md-content>
     <md-list ng-cloak ng-show="job.actions.length > 0">
         <md-header class="md-no-sticky">Current Actions:</md-header>
-        <md-list-item ng-repeat="action in job.actions">
+        <md-list-item ng-repeat="action in job.actions" ng-class="{'show_error' : action.hasError }">
             <md-icon md-svg-icon="/assets/images/database.svg"></md-icon>
             <p> {{ action.name }} </p>
             <md-menu class="md-secondary">

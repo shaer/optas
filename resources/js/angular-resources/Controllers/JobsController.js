@@ -11,12 +11,12 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
             });
         }
 
-        $scope.manageJobDialog = function(ev, job) {
+        $scope.manageJobDialog = function(ev, job, tabToShow) {
+            tabToShow = tabToShow === undefined ? 0 : tabToShow;
             $scope.editDialog = $mdDialog;
             if (job === undefined) {
                 job = JobService.createNew();
                 job.is_new = true;
-
             }
 
             $mdDialog.show({
@@ -26,19 +26,16 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
                 targetEvent: ev,
                 clickOutsideToClose: false,
                 locals: {
-                    local: [$scope.manageJobDialog, job]
+                    local: [$scope.manageJobDialog, job, JobService, tabToShow]
                 },
-            }).then(function(save) {
-                if (save) {
-                    if (job.is_new !== undefined && job.is_new == true) {
-                        JobService.store(job).then(function(response) {
-                            $scope.jobs[response.data.data.id] = response.data.data;
-                        });
+            }).then(function(data) {
+                if (data[0]) {
+                    var newJob = data[1];
+                    if (data[2]) {
+                        $scope.jobs[newJob.id] = newJob;
                     }
                     else {
-                        JobService.update(job).then(function(response) {
-                            $scope.jobs[job.id] = job;
-                        });
+                        $scope.jobs[job.id] = job;
                     }
                 }
             });

@@ -38,3 +38,11 @@
     min-width:30px;
     margin: 5px;
 }
+
+.show_error {
+    background-color: #fcc9c9;
+}
+
+.error_message{
+    color: #F00;
+}

@@ -1,4 +1,9 @@
 <div class="scheduler">
+    <div class="md-block show_form_errors">
+        <ul>
+            <li ng-repeat="error in formErrors">{{error[0]}}</li>
+        </ul>
+    </div>
     <md-input-container  class="md-block">
         <md-checkbox name="runeveryday" ng-true-value="'T'" ng-false-value="'F'" ng-model="job.scheduler.everyday.exists">
         Job Should run everyday
@@ -17,7 +22,7 @@
     </md-input-container>
     <md-input-container  class="md-block" ng-show="job.scheduler.weekly.exists == 'T'">
         <label>Select Weekdays</label>
-        <md-select ng-model="job.scheduler.weekly.list" multiple="true">
+        <md-select name="weekdays" ng-model="job.scheduler.weekly.list" multiple="true" ng-required="job.scheduler.weekly.exists == 'T'">
             <md-option value="7">Sunday</md-option>
             <md-option value="1">Monday</md-option>
             <md-option value="2">Tuesday</md-option>
@@ -26,6 +31,8 @@
             <md-option value="5">Friday</md-option>
             <md-option value="6">Saturday</md-option>
         </md-select>
+        <div class="error_message" ng-show="jobForm.weekdays.$invalid && showFieldErrors">You have missed to select weekdays!</div>
+
     </md-input-container>
     
     <md-input-container  class="md-block">
@@ -39,7 +46,7 @@
         </md-input-container> run on a specific weekday
     </md-input-container>
     <md-input-container  class="md-block" ng-show="job.scheduler.spmd.exists == 'T'">
-        
+        <div class="error_message" ng-show="showSpmdError && showFieldErrors">You have missed to select days!</div>
         <strong>Days of Month</strong>
         <div class="spmdlist">
             <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(1, 31)" ng-click="addDay(n)">{{n}}</md-button>
@@ -48,7 +55,6 @@
         <div class="spmdlist">
             <md-button ng-class="{'md-raised': true, 'md-primary': job.scheduler.spmd.list.indexOf(n) != -1}" ng-repeat="n in range(-10, -1)" ng-click="addDay(n)">{{n}}</md-button>
         </div>
-        
     </md-input-container>
     
     <md-input-container  class="md-block">
@@ -64,7 +70,7 @@
     
     <md-input-container  class="md-block" ng-show="job.scheduler.months.exists == 'T'">
         <label>Select Month</label>
-        <md-select ng-model="job.scheduler.months.list" multiple="true">
+        <md-select name="months" ng-model="job.scheduler.months.list" multiple="true" ng-required="job.scheduler.months.exists == 'T'">
             <md-option value="1">January</md-option>
             <md-option value="2">February</md-option>
             <md-option value="3">March</md-option>
@@ -79,6 +85,8 @@
             <md-option value="12">December</md-option>
         </md-select>
     </md-input-container>
+    <div class="error_message" ng-show="jobForm.months.$invalid && showFieldErrors">You have missed to select months!</div>
+
     
     <md-input-container  class="md-block">
         <md-checkbox name="runeveryday" ng-true-value="'T'" ng-false-value="'F'" ng-model="job.scheduler.days.exists"></md-checkbox>
@@ -107,6 +115,7 @@
                 </md-button>
             </md-input-container>
             </div>
+        <div class="error_message" ng-show="showDaysError && showFieldErrors">You have missed to add days!</div>
         <md-button class="md-raised md-primary" ng-click="addNewDate()">Add New Date</md-button>
     </div>
 </div>

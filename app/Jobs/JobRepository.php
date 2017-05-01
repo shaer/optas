@@ -19,17 +19,18 @@ class JobRepository extends BaseRepository
     
     public function save($data) {
         DB::beginTransaction();
+
         $this->model = $this->getNew($data);
         $this->model->created_by = Auth::user()->id;
         
-        if(!parent::save($this->model)) return false;
+        if(!parent::save($this->model)) return array(0,false, $this->model);
         
         if(isset($data['scheduler']) && !empty(isset($data['scheduler']))) {
             $this->_processSchedulerData($data['scheduler']);
         }
         
         if(isset($data['actions']) && !empty(isset($data['actions']))) {
-            $output = $this->_saveActions($data['actions'], $this->model, false);
+            $output = $this->_saveActions($data['actions']);
             
             if($output !== true) {
                 return $output;
@@ -62,7 +63,8 @@ class JobRepository extends BaseRepository
                 DB::table('actions')->whereIn('id', $items_to_delete)->delete(); 
             }
             
-            $output = $this->_saveActions($data['actions'], true);
+            $output = $this->_saveActions($data['actions']);
+            
             if($output !== true) {
                 return $output;
             }
@@ -86,14 +88,16 @@ class JobRepository extends BaseRepository
         return $schedule->save();
     }
     
-    private function _saveActions($actions, $is_udpate = false) {
+    private function _saveActions($actions) {
         $action_repository = resolve('App\Actions\ActionRepository');
         
         foreach($actions as $key => $action) {
             //sometimes when we are updating a job, w need to add new actions.
-            $is_new_action = !$is_udpate;
+            $is_update = isset($action['id']);
+            $is_new_action = !$is_update;
+            
             //load action model from job if update.
-            if($is_udpate) {
+            if($is_update) {
                 $action_update = true;
                 $action_id = $action['id'];
                 $action_model = $this->model->actions()->find($action_id);
@@ -118,7 +122,7 @@ class JobRepository extends BaseRepository
             $triggrable->fill($action['triggerable']);
         
             if(!$action_repository->save($triggrable)) {
-                return ["actions", "[$key][triggerable]",  $triggrable];
+                return [1, $key,  $triggrable];
             }
             
             //if these are a new objects, add the associations
@@ -128,7 +132,7 @@ class JobRepository extends BaseRepository
             }
         
             if(!$action_repository->save($action_model)) {
-                return ["actions", "[$key]", $action_model];
+                return [1, $key, $action_model];
             }
         }
         
