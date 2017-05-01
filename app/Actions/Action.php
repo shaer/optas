@@ -14,7 +14,7 @@ class Action extends Model
 
     protected function loadRules() {
         $this->rules = array(
-            'action_type_id' => 'required|exists:actions,id',
+            'action_type_id' => 'required|exists:action_types,id',
             'job_id' => 'required|exists:jobs,id',
         );
     }

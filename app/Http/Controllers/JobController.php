@@ -57,13 +57,12 @@ class JobController extends \App\Core\CrudController
     public function update(Request $request, $id) {
         $data = $this->repository->update($id, $request->except(['_method','_token']));
         if($data === true) {
-            $status  = 200;
-            $request->session()->flash('success', true);
+            return $this->sendJsonOutput(200, $this->repository->getModel());
         } else {
-            $status = 400;
             $data = [$data[0], $data[1], $data[2]->errors()->toArray()];
+            return $this->sendJsonOutput(400, $data);
         }
         
-        return $this->sendJsonOutput($status, $data);
+        
     }
 }

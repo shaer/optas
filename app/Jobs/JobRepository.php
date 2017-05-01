@@ -45,20 +45,24 @@ class JobRepository extends BaseRepository
         DB::beginTransaction();
         if(!parent::update($id, $data)) return false; 
         
-        $job = parent::getById($id);
+        $this->model = parent::getById($id);
+        
+        if(isset($data['scheduler']) && !empty(isset($data['scheduler']))) {
+            $this->_processSchedulerData($data['scheduler']);
+        }
         
         if(empty($data['actions'])) {
-            $job->actions()->delete();
+            $this->model->actions()->delete();
         } else {
-            $provided_actions = array_map(function($key) { return substr($key, 7); }, array_keys($data['actions']));
-            $current_actions  = $job->actions()->pluck('id')->toArray();
+            $provided_actions = array_column($data['actions'], "id");
+            $current_actions  = $this->model->actions()->pluck('id')->toArray();
             $items_to_delete  = array_diff($current_actions, $provided_actions);
             
             if(!empty($items_to_delete)) {
                 DB::table('actions')->whereIn('id', $items_to_delete)->delete(); 
             }
             
-            $output = $this->_saveActions($data['actions'], $job, true);
+            $output = $this->_saveActions($data['actions'], true);
             if($output !== true) {
                 return $output;
             }
@@ -91,7 +95,7 @@ class JobRepository extends BaseRepository
             //load action model from job if update.
             if($is_udpate) {
                 $action_update = true;
-                $action_id = substr($key, 7);
+                $action_id = $action['id'];
                 $action_model = $this->model->actions()->find($action_id);
                 if(!$action_model) {
                     $is_new_action = true;

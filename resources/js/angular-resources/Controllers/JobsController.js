@@ -12,14 +12,11 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
         }
 
         $scope.manageJobDialog = function(ev, job) {
-
-            console.log(job);
             $scope.editDialog = $mdDialog;
-            var is_new = false;
-
             if (job === undefined) {
-                is_new = true;
                 job = JobService.createNew();
+                job.is_new = true;
+
             }
 
             $mdDialog.show({
@@ -33,13 +30,13 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
                 },
             }).then(function(save) {
                 if (save) {
-                    if (is_new) {
+                    if (job.is_new !== undefined && job.is_new == true) {
                         JobService.store(job).then(function(response) {
                             $scope.jobs[response.data.data.id] = response.data.data;
                         });
                     }
                     else {
-                        JobService.store(job).then(function(response) {
+                        JobService.update(job).then(function(response) {
                             $scope.jobs[job.id] = job;
                         });
                     }

@@ -13,6 +13,9 @@ app.factory('JobService', ['$http',
             store: function(object) {
                 return $http.post("/jobs/", object);
             },
+            update: function(object) {
+                return $http.patch("/jobs/" + object.id, object);
+            },
             createNew: function() {
                 return {
                     "scheduler": {
