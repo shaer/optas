@@ -5,6 +5,7 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
             $scope.jobs = response.data.data.jobs;
             $scope.connections = response.data.data.connections;
             $scope.action_types = response.data.data.action_types;
+            $scope.can = response.data.data.can;
         });
 
         $scope.loadJobDetails = function(id) {

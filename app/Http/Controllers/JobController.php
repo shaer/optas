@@ -12,12 +12,14 @@ class JobController extends \App\Core\CrudController
 {
     private $action;
     private $connections;
+    private $request;
     
-    public function __construct(JobRepository $job, ActionRepository $action, ConnectionRepository $connection) {
+    public function __construct(Request $request, JobRepository $job, ActionRepository $action, ConnectionRepository $connection) {
         $this->repository  = $job;
         $this->route_name  = "jobs";
         $this->actions     = $action;
         $this->connections = $connection;
+        $this->request     = $request;
     }
     
     public function index(){
@@ -26,13 +28,18 @@ class JobController extends \App\Core\CrudController
         $connections     = $this->connections->getConnections();
         $roles['edit']   = Auth::user()->hasRole("edit_" . $this->route_name);
         $roles['delete'] = Auth::user()->hasRole("delete_" . $this->route_name);
-
-        return $this->sendJsonOutput(200, [
-            'jobs'         => $data,
-            'action_types' => $action_types,
-            'connections'  => $connections,
-            'can'          => $roles,
-        ]);
+        $roles['add']    = Auth::user()->hasRole("add_" . $this->route_name);
+        
+        if($this->request->wantsJson()) {
+            return $this->sendJsonOutput(200, [
+                'jobs'         => $data,
+                'action_types' => $action_types,
+                'connections'  => $connections,
+                'can'          => $roles,
+            ]);
+        }
+        
+        return redirect()->action('JobController@manage');
     }
     
     public function manage() {

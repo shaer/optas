@@ -124,7 +124,7 @@
                         </li>
                         @if(Auth::user()->hasRole('view_jobs'))
                         <li {{ (Request::is('jobs/*') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('jobs') }}"><i class="fa fa-file-text-o fa-fw"></i> Reports</a>
+                            <a href="{{ url ('jobs/manage') }}"><i class="fa fa-file-text-o fa-fw"></i> Jobs</a>
                         </li>
                         @endif
                         @if(Auth::user()->hasOneRole(['view_users','view_usergroups','view_roles', 'view_connections']))
