@@ -46,3 +46,7 @@
 .error_message{
     color: #F00;
 }
+
+.navbar-default {
+    z-index: auto;
+}

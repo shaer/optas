@@ -3,8 +3,8 @@
       <div class="md-toolbar-tools">
         <h2>Add Database Action</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        <md-button class="md-icon-button" ng-click="addAction.cancel()">
+          <md-icon md-svg-src="/assets/images/close.svg" aria-label="Close dialog" ></md-icon>
         </md-button>
       </div>
     </md-toolbar>
@@ -19,9 +19,7 @@
                 <md-input-container class="md-block">
                     <label>Select Database Connection</label>
                     <md-select name="connection_id" required ng-model="addAction.action.triggerable.connection_id">
-                        <md-option ng-value="1">Database 1</md-option>
-                        <md-option ng-value="2">Database 2</md-option>
-                        <md-option ng-value="3">Database 3</md-option>
+                        <md-option ng-repeat="(key, connection) in addAction.connections" ng-value="key">{{connection}}</md-option>
                     </md-select>
                     <div class="error_message" ng-show="addDbActionForm.connection_id.$invalid && addAction.showFieldErrors">This field is required!</div>
                 </md-input-container>

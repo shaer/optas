@@ -7,7 +7,7 @@
     <md-input-container class="md-block" flex-gt-xs>
         <label>Select an Action to Add</label>
         <md-select ng-model="$parent.new_action_type" ng-change="showActionsPopup()">
-            <md-option ng-value="1">Database Action</md-option>
+            <md-option ng-repeat="(key, action_type) in actionTypes" ng-value="key">{{action_type}}</md-option>
         </md-select>
     </md-input-container>
 </md-content>
@@ -26,7 +26,7 @@
                         <md-button ng-click="showActionsPopup(action)">Settings</md-button>
                     </md-menu-item>
                     <md-menu-item>
-                        <md-button>Delete</md-button>
+                        <md-button ng-click="deleteAction($index)">Delete</md-button>
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>

@@ -5,7 +5,7 @@
         <h2>Create New Job</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+          <md-icon md-svg-src="/assets/images/close.svg"aria-label="Close dialog"></md-icon>
         </md-button>
       </div>
     </md-toolbar>

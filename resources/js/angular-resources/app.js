@@ -1,7 +1,8 @@
 var app = angular.module('OptasJobs', [
     'ngAnimate',
     'ngRoute',
-    'ngMaterial'
+    'ngMaterial',
+    'angular-loading-bar'
 ]);
 
 app.config(['$routeProvider',
@@ -17,4 +18,8 @@ app.config(['$routeProvider',
 
 app.config(['$qProvider', function($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
+}]);
+
+app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
 }]);

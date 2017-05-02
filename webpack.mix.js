@@ -46,6 +46,7 @@ mix.scripts([
 
 mix.styles([
     'bower_components/angular-material/angular-material.min.css',
+    'bower_components/angular-loading-bar/src/loading-bar.css',
     'resources/css/angular.css'
 ], 'public/assets/stylesheets/angular.css', './');
 
@@ -57,6 +58,7 @@ mix.scripts([
     'bower_components/angular-aria/angular-aria.min.js',
     'bower_components/angular-messages/angular-messages.min.js',
     'bower_components/angular-material/angular-material.min.js',
+    'bower_components/angular-loading-bar/src/loading-bar.js',
     'resources/js/angular-resources/app.js',
     'resources/js/angular-resources/Services/*.js',
     'resources/js/angular-resources/Directives/*.js',

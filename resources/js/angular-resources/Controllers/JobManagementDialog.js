@@ -2,6 +2,9 @@ function EditDialogController($scope, $mdDialog, local) {
     $scope.job = local[1];
     var JobService = local[2];
     $scope.activeTab = local[3];
+    $scope.actionTypes = local[4];
+    $scope.connections = local[5];
+
     $scope.formErrors = [];
     $scope.specificDaysFormat = buildLocaleProvider("DD-MMM");
 
@@ -105,6 +108,10 @@ function EditDialogController($scope, $mdDialog, local) {
         }
     }
 
+    $scope.deleteAction = function(index) {
+        $scope.job.actions.splice(index, 1);
+    }
+
     $scope.showActionsPopup = function(action) {
         var showParentDialog = local[0];
         var action_type_id;
@@ -125,11 +132,15 @@ function EditDialogController($scope, $mdDialog, local) {
             "/app/jobs/actions/database.html"
         ]
 
+        console.log(action);
+        console.log(action_type_id);
+
         $mdDialog.show({
             controllerAs: 'addAction',
             controller: function($mdDialog) {
                 this.action = action;
                 this.showFieldErrors = false;
+                this.connections = $scope.connections;
 
                 this.save = function(isValidForm) {
                     if (!isValidForm) {

@@ -3,6 +3,8 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
 
         JobService.getAll().then(function(response) {
             $scope.jobs = response.data.data.jobs;
+            $scope.connections = response.data.data.connections;
+            $scope.action_types = response.data.data.action_types;
         });
 
         $scope.loadJobDetails = function(id) {
@@ -26,7 +28,10 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
                 targetEvent: ev,
                 clickOutsideToClose: false,
                 locals: {
-                    local: [$scope.manageJobDialog, job, JobService, tabToShow]
+                    local: [
+                        $scope.manageJobDialog, job, JobService, tabToShow,
+                        $scope.action_types, $scope.connections
+                    ]
                 },
             }).then(function(data) {
                 if (data[0]) {
