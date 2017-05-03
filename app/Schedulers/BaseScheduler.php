@@ -19,7 +19,6 @@ abstract class BaseScheduler
     protected abstract function runBuilder($list, $should_run);
 
     protected function _buildExpression($index, $expression){
-        
         if(is_array($expression)) {
             $expression = implode(",", $expression);
         }

@@ -4,7 +4,7 @@ namespace App\Schedulers;
 
 class Schedule
 {
-    private $expression = "* * * * *";
+    private $expression = "0 0 * * *";
     private $constrains;
     private $job;
     private $raw_schedule;

@@ -14,6 +14,10 @@ app.factory('JobService', ['$http',
                 return $http.post("/jobs/", object);
             },
             update: function(object) {
+                for (var index in object.scheduler.days.list) {
+                    var date = object.scheduler.days.list[index];
+                    object.scheduler.days.list[index] = moment(date).format('YYYY-MM-DD')
+                }
                 return $http.patch("/jobs/" + object.id, object);
             },
             createNew: function() {

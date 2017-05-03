@@ -12,7 +12,7 @@ class DateSchedule extends BaseScheduler
             return $this->schedule->addConstrain("date_run", implode($list, ","));
         }
         
-        $this->schedule->addConstrain("date_skip", $list);
+        $this->schedule->addConstrain("date_skip", implode($list, ","));
     }
 }
 

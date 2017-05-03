@@ -12,9 +12,9 @@
         <md-card-content>
           <p>{{job.description}}</p>
           <ul>
-              <li>Last Run: 25/08/2017</li>
-              <li>Next Run: 26/08/2017</li>
-              <li>Status: Success</li>
+              <li>Last Run: {{job.ended_at}}</li>
+              <li>Next Run: {{job.next_run_date}}</li>
+              <li>Status: {{job.status}}</li>
           </ul>
         </md-card-content>
         

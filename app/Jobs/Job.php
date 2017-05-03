@@ -25,6 +25,10 @@ class Job extends Model
         return $this->hasMany('App\Actions\Action');
     }
     
+    public function schedule_constrains(){
+        return $this->hasMany('App\Schedulers\ScheduleConstrain');
+    }
+    
     public function action_handlers()
     {
         return $this->hasManyThrough('App\Actions\Types\DbAction', 'App\Actions\Action');

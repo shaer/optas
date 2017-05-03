@@ -9,11 +9,11 @@ use App\Core\Exceptions\EntityNotFoundException;
 use DB;
 use App\Schedulers\SchedulerHandler;
 use App\Schedulers\Schedule;
+use Cron\CronExpression;
 
 class JobRepository extends BaseRepository
 {
-    public function __construct(Job $model)
-    {
+    public function __construct(Job $model) {
         $this->model = $model;
     }
     
@@ -76,6 +76,9 @@ class JobRepository extends BaseRepository
     
     private function _processSchedulerData($scheduler){
         $schedule = new Schedule();
+        
+        $this->model->schedule_constrains()->delete();
+
         foreach($scheduler as $key => $single) {
             if(isset($single['exists']) && $single['exists'] == "T") {
                 $object = SchedulerHandler::getObject($key, $schedule);
@@ -149,5 +152,56 @@ class JobRepository extends BaseRepository
         }
         
         return Job::with('actions.triggerable')->get()->keyBy("id");
+    }
+    
+    public function calculateJobRunTime($ids = false) {
+        if(!$ids) {
+            $jobs = $this->getAll();
+        } else {
+            if(is_int($ids)) {
+                $ids = [$ids];
+            }
+            $jobs = $this->getById($ids);
+        }
+        
+        foreach($jobs as $job) {
+            $this->calculateNextRun($job);
+        }
+    }
+    
+    protected function calculateNextRun($job, $today = false) {
+        $cron  = $job->schedule;
+        $today = $today ? $today : date_create(date("Y-m-d"));
+        
+        if(isset($job->schedule_constrains[0])) {
+            $flag  = $job->schedule_constrains[0]->key;
+            $dates = $job->schedule_constrains[0]->value;
+            
+            $dates = explode(",", $dates);
+
+            foreach($dates as $date) {
+                $date = date_create($date);
+                $diff = date_diff($today, $date);
+                $diff_days = $diff->format("%a");
+                
+                if($diff_days == 0) {
+                    if($flag == "date_skip") {
+                        return; 
+                    }
+                    else {
+                        $cron_reset = [2 => "*", 3 => "*", 4 => "*", 5 => "*"];
+                        $cron       = explode(" ", $cron);
+                        $new_cron   = array_replace($cron, $cron_reset);
+                        $cron       = implode(" ", $new_cron);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        $cron = CronExpression::factory($cron);
+        $next_run = $cron->getNextRunDate($today)->format('Y-m-d H:i:s');
+        $job->next_run_date = $next_run;
+        $job->save();
     }
 }
