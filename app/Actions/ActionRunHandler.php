@@ -3,6 +3,7 @@ namespace App\Actions;
 
 use App\Jobs\Job;
 use Carbon\Carbon;
+use App\Jobs\JobRepository;
 
 class ActionRunHandler {
     public function runActions($job_id) {
@@ -23,6 +24,8 @@ class ActionRunHandler {
         $job->updateStatus($status);
         
         //TO-DO: retrieve job next run schedule.
+        $job_repository = resolve("App\Jobs\JobRepository");
+        $job_repository->calculateNextRun($job);
         
         return $status == "S";
     }

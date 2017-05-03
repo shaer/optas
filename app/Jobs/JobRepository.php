@@ -169,9 +169,9 @@ class JobRepository extends BaseRepository
         }
     }
     
-    protected function calculateNextRun($job, $today = false) {
+    public function calculateNextRun($job) {
         $cron  = $job->schedule;
-        $today = $today ? $today : date_create(date("Y-m-d"));
+        $today = date_create(date("Y-m-d"));
         
         if(isset($job->schedule_constrains[0])) {
             $flag  = $job->schedule_constrains[0]->key;
@@ -186,6 +186,8 @@ class JobRepository extends BaseRepository
                 
                 if($diff_days == 0) {
                     if($flag == "date_skip") {
+                        $job->next_run_date = null;
+                        $job->save();
                         return; 
                     }
                     else {
@@ -200,7 +202,7 @@ class JobRepository extends BaseRepository
         }
         
         $cron = CronExpression::factory($cron);
-        $next_run = $cron->getNextRunDate($today)->format('Y-m-d H:i:s');
+        $next_run = $cron->getNextRunDate()->format('Y-m-d H:i:s');
         $job->next_run_date = $next_run;
         $job->save();
     }
