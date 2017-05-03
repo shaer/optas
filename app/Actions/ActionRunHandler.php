@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class ActionRunHandler {
     public function runActions($job_id) {
-        $job = Job::with('actions','actions.triggerable')->get()[0];
+        $job = Job::with('actions','actions.triggerable')->find($job_id);
         $job->started_at = Carbon::now();
         $job->updateStatus("R");
         $status = "S";
