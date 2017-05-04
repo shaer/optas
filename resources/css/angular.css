@@ -7,7 +7,7 @@
 }
 
 .jobCard{
-    width:250px;
+    width:230px;
 }
 
 .md-headline {
@@ -49,4 +49,53 @@
 
 .navbar-default {
     z-index: auto;
+}
+
+.job_running {
+    background-color: #e6ee9c;
+}
+
+.job_success {
+    background-color: #a5d6a7;
+}
+
+.job_error {
+    background-color: #ef9a9a; 
+}
+
+.job_pending {
+    background-color: #80deea; 
+}
+
+.job_disabled {
+    background-color: #b0bec5; 
+}
+
+.job_run_time{
+    padding:0;
+    margin:0;
+    list-style: none;
+    font-size: 11px;
+    clear:both;
+}
+
+.job_run_time li{
+    float:right;
+}
+
+.job_run_time .next{
+    color: #2c4c2a;
+}
+.job_run_time .last{
+    color: #4c2b2b;
+}
+
+.job_namespace{
+    font-size:10px;
+    text-transform: uppercase;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.job_description{
+    font-size: 13px;
 }

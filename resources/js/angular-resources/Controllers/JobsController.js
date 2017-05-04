@@ -48,9 +48,11 @@ app.controller('JobsController', ['$scope', '$http', '$mdDialog', 'JobService',
         };
 
         $scope.deleteJob = function(id) {
-            JobService.delete(id).then(function(response) {
-                delete $scope.jobs[id];
-            });
+            if (confirm("Are you sure you want to delete this job?")) {
+                JobService.delete(id).then(function(response) {
+                    delete $scope.jobs[id];
+                });
+            }
         }
     }
 ]);

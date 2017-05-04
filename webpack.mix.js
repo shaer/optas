@@ -51,6 +51,7 @@ mix.scripts([
     'bower_components/angular-material/angular-material.min.js',
     'bower_components/angular-loading-bar/src/loading-bar.js',
     'resources/js/angular-resources/app.js',
+    'resources/js/angular-resources/Filters/*.js',
     'resources/js/angular-resources/Services/*.js',
     'resources/js/angular-resources/Directives/*.js',
     'resources/js/angular-resources/Controllers/*.js'

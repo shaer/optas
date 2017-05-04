@@ -23,3 +23,10 @@ app.config(['$qProvider', function($qProvider) {
 app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
+
+app.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('green')
+        .accentPalette('indigo')
+        .warnPalette('red');
+});
