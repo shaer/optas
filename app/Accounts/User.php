@@ -42,8 +42,9 @@ class User extends Authenticatable
         $this->rules = array(
             'name'          => 'required',
             'email'         => 'required|email|unique:users,email,' . $this->id,
-            'status'        => 'required|in:' . implode(',', array_keys($this->userStatus)) . '',
+            'status'        => 'in:' . implode(',', array_keys($this->userStatus)) . '',
             'user_group_id' => 'required|exists:user_groups,id',
+            'password'      => 'required',
         );
     }
     

@@ -7,11 +7,11 @@ The main goal of this application is to build a fully automated reporting system
 Currently it is planned to build 3 types of actions that can be run by any job
 
 1. **Database Query**
-  * Where you can execute any type of database queries and get the result in CSV or HTML format.
+  - Where you can execute any type of database queries and get the result in CSV or HTML format.
 2. **OS Command**
-  * Where you can execute any OS command.
+  - Where you can execute any OS command.
 3. **FileTransfer**
-  * Where you can move files from one server to another.
+  - Where you can move files from one server to another.
 
 There is no limitation on the number of actions that a job can execute, for example one job can run database query, export the output to a CSV file then move the file to another server and then run cURL command to post the file to a specific web service.
 
