@@ -2,6 +2,8 @@
 
 namespace App\Schedulers;
 
+use App\Core\Exceptions\InvalidScheduleException;
+
 class DailySchedule extends BaseScheduler
 {
     const CRON_INDEX = 2; 
@@ -11,7 +13,9 @@ class DailySchedule extends BaseScheduler
     protected function runBuilder($list, $should_run) {
         $this->month_days = range(1,31);
         
-        
+        if(count(array_diff($list, $this->month_days)) > 0) {
+            throw new InvalidScheduleException();
+        }
         
         if($should_run) {
             $days = array_intersect($this->month_days, $list);

@@ -78,7 +78,6 @@ class JobRepository extends BaseRepository
         $schedule = new Schedule();
         
         $this->model->schedule_constrains()->delete();
-
         foreach($scheduler as $key => $single) {
             if(isset($single['exists']) && $single['exists'] == "T") {
                 $object = SchedulerHandler::getObject($key, $schedule);
@@ -88,7 +87,7 @@ class JobRepository extends BaseRepository
 
         $schedule->setJob($this->model);
         $schedule->setRawSchedule(serialize($scheduler));
-        return $schedule->save();
+        $schedule->save();
     }
     
     private function _saveActions($actions) {
