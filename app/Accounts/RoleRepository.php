@@ -21,18 +21,23 @@ class RoleRepository extends BaseRepository
     }
     
     public function save($data) {
-        $data['machine_name'] = Helper::tokenize($data['name']);
+        if(isset($data['name'])) {
+            $data['machine_name'] = Helper::tokenize($data['name']);
+        }
+        
         return parent::save($data);
     }
     
     public function update($id, $data) {
-        $model = $this->repository->requireById($id);
+        $model = $this->requireById($id);
         
         if($model->role_type == 0) {
             return false;
         }
         
-        $data['machine_name'] = Helper::tokenize($data['name']);
+        if(isset($data['name'])) {
+            $data['machine_name'] = Helper::tokenize($data['name']);
+        }
         return parent::update($id, $data); 
     }
 }

@@ -24,6 +24,12 @@ function fillFields(form, fields, data) {
 	}
 }
 
+window.Parsley.on('field:error', function() {
+  this.$element.closest("div").addClass("has-error")
+  });
+  window.Parsley.on('field:success', function() {this.$element.closest("div").removeClass("has-error")
+});
+
 $(".ajaxForm").submit(function(event) {
 	event.preventDefault();
 	removeErrors($(this));

@@ -29,7 +29,7 @@ class UserGroupRepository extends BaseRepository
     }
     
     public function update($id, $data) {
-        $model = $this->repository->requireById($id);
+        $model = $this->requireById($id);
         
         if($model->group_type == 0) {
             return false;

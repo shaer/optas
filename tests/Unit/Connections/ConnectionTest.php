@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Connections;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Connections\Connection;
 use App\Connections\ConnectionRepository;
 use Illuminate\Support\Facades\Crypt;
+use App\Core\Exceptions\EntityNotFoundException;
+
 
 class ConnectionTest extends TestCase
 {
@@ -51,6 +53,12 @@ class ConnectionTest extends TestCase
     {
         $output = $this->repository->update($this->sample_model->id, $connection);
         $this->assertEquals($update_flag, $output);
+    }
+    
+    public function testUpdateConnectionThatDoesnotExist()
+    {
+        $this->expectException(EntityNotFoundException::class);
+        $this->repository->update(-50, []);
     }
     
     public function addConnectionDataProvider(){

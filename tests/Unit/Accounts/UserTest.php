@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Accounts;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Accounts\UserRepository;
 use App\Accounts\User;
 use Illuminate\Support\Facades\Hash;
+use App\Core\Exceptions\EntityNotFoundException;
 
 class UserTest extends TestCase
 {
@@ -47,6 +48,12 @@ class UserTest extends TestCase
             $this->assertTrue(Hash::check($user['password'], $this->repository->getModel()->password),
                 "Assert that the hashed password matched the provided password");
         }
+    }
+    
+    public function testUpdateUserThatDoesnotExist()
+    {
+        $this->expectException(EntityNotFoundException::class);
+        $this->repository->update(-50, []);
     }
     
     public function userDataProvider()

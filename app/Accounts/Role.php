@@ -13,7 +13,8 @@ class Role extends Model
     
     protected function loadRules() {
         $this->rules = array(
-            'name' => 'required',
+            'name' => 'required|unique:roles,name,' . $this->id,
+            'machine_name' => 'required',
         );
     }
 }
