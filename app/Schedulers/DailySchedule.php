@@ -29,9 +29,6 @@ class DailySchedule extends BaseScheduler
             $diff_days = array_diff($this->month_days, $list);
             return $this->_buildExpression(self::CRON_INDEX, $diff_days);
         }
-        
-        //j for month day
-        //return $this->schedule->addConstrain("j", implode(",", $days));
     }
 }
 

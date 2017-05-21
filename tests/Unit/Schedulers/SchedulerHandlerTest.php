@@ -76,83 +76,83 @@ class SchedulerHandlerTest extends TestCase
     public function schedulerDataProvider()
     {
         return [
-            // "Valid Everyday Job" => [["scheduler" => ["everyday" => [
-            //             "exists" => "T"
-            //         ]
-            //     ]
-            // ], true, "0 0 * * *"],
+            "Valid Everyday Job" => [["scheduler" => ["everyday" => [
+                        "exists" => "T"
+                    ]
+                ]
+            ], true, "0 0 * * *"],
     
-            // "Valid Weekly job" => [["scheduler" => ["weekly" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [1,2,6]
-            //         ]
-            //     ]
-            // ], true, "0 0 * * 1,2,6"],
+            "Valid Weekly job" => [["scheduler" => ["weekly" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [1,2,6]
+                    ]
+                ]
+            ], true, "0 0 * * 1,2,6"],
     
-            // "Invalid Weekly job" => [["scheduler" => ["weekly" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [8]
-            //         ]
-            //     ]
-            // ], false],
+            "Invalid Weekly job" => [["scheduler" => ["weekly" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [8]
+                    ]
+                ]
+            ], false],
     
-            // "Valid Monthly Job" => [["scheduler" => ["spmd" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [3,4,5]
-            //         ]
-            //     ]
-            // ], true, "0 0 3,4,5 * *"],
+            "Valid Monthly Job" => [["scheduler" => ["spmd" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [3,4,5]
+                    ]
+                ]
+            ], true, "0 0 3,4,5 * *"],
     
-            // "Invalid Monthly Job" => [["scheduler" => ["spmd" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [95]
-            //         ]
-            //     ]
-            // ], false],
+            "Invalid Monthly Job" => [["scheduler" => ["spmd" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [95]
+                    ]
+                ]
+            ], false],
     
-            // "Specific Days in Specific Months" => [["scheduler" => ["spmd" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [15, 16]
-            //         ], "months" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [1,2,3]
-            //         ]
-            //     ]
-            // ], true, "0 0 15,16 1,2,3 *"],
+            "Specific Days in Specific Months" => [["scheduler" => ["spmd" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [15, 16]
+                    ], "months" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [1,2,3]
+                    ]
+                ]
+            ], true, "0 0 15,16 1,2,3 *"],
     
-            // "Specific Days in Specific Months and weekdays" => [["scheduler" => ["spmd" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [15, 16]
-            //         ], "months" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [1,2,3]
-            //         ], "weekly" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [1,3,4]
-            //         ]
-            //     ]
-            // ], true, "0 0 15,16 1,2,3 1,3,4"],
+            "Specific Days in Specific Months and weekdays" => [["scheduler" => ["spmd" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [15, 16]
+                    ], "months" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [1,2,3]
+                    ], "weekly" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [1,3,4]
+                    ]
+                ]
+            ], true, "0 0 15,16 1,2,3 1,3,4"],
     
-            // "Specific Days in invalid Month" => [["scheduler" => ["spmd" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [15, 16]
-            //         ], "months" => [
-            //             "exists" => "T",
-            //             "should_run" => "T",
-            //             "list" => [15]
-            //         ]
-            //     ]
-            // ], false],
+            "Specific Days in invalid Month" => [["scheduler" => ["spmd" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [15, 16]
+                    ], "months" => [
+                        "exists" => "T",
+                        "should_run" => "T",
+                        "list" => [15]
+                    ]
+                ]
+            ], false],
     
             "Shouldn't run in specific weekdays" => [["scheduler" => ["weekly" => [
                         "exists" => "T",

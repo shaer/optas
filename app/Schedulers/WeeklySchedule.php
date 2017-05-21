@@ -22,9 +22,6 @@ class WeeklySchedule extends BaseScheduler
             $diff_days = array_diff($this->weekdays, $list);
             return $this->_buildExpression(self::CRON_INDEX, $diff_days);
         }
-        
-        //N = weekday 1=Monday, 7=Sunday
-        //return $this->schedule->addConstrain("N", implode(",", $days));
     }
 }
 

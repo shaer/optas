@@ -23,9 +23,6 @@ class MonthlySchedule extends BaseScheduler
             $diff_months = array_diff($this->months, $list);
             return $this->_buildExpression(self::CRON_INDEX, $diff_months);
         }
-        
-        //n for months
-        //return $this->schedule->addConstrain("n", implode(",", $run_months));
     }
 }
 
